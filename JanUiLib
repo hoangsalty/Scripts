@@ -68,7 +68,7 @@ local function createOptionHolder(holderTitle, parent, parentTable, subHolder)
 		ImageColor3 = Color3.fromRGB(20, 20, 20),
 		ScaleType = Enum.ScaleType.Slice,
 		SliceCenter = Rect.new(100, 100, 100, 100),
-		SliceScale = 0.04,
+		SliceScale = 0.1,
 		ClipsDescendants = true,
 		Parent = parent
 	})
@@ -82,7 +82,7 @@ local function createOptionHolder(holderTitle, parent, parentTable, subHolder)
 			ImageColor3 = parentTable.open and (subHolder and Color3.fromRGB(16, 16, 16) or Color3.fromRGB(10, 10, 10)) or (subHolder and Color3.fromRGB(10, 10, 10) or Color3.fromRGB(6, 6, 6)),
 			ScaleType = Enum.ScaleType.Slice,
 			SliceCenter = Rect.new(100, 100, 100, 100),
-			SliceScale = 0.04,
+			SliceScale = 0.1,
 			Parent = parentTable.main
 		})
 	end
@@ -223,7 +223,7 @@ function createToggle(option, parent)
 		ImageColor3 = option.state and Color3.fromRGB(255, 65, 65) or Color3.fromRGB(100, 100, 100),
 		ScaleType = Enum.ScaleType.Slice,
 		SliceCenter = Rect.new(100, 100, 100, 100),
-		SliceScale = 0.02,
+		SliceScale = 0.05,
 		Parent = main
 	})
 	
@@ -235,7 +235,7 @@ function createToggle(option, parent)
 		ImageColor3 = option.state and Color3.fromRGB(255, 65, 65) or Color3.fromRGB(20, 20, 20),
 		ScaleType = Enum.ScaleType.Slice,
 		SliceCenter = Rect.new(100, 100, 100, 100),
-		SliceScale = 0.02,
+		SliceScale = 0.05,
 		Parent = tickboxOutline
 	})
 	
@@ -328,7 +328,7 @@ function createButton(option, parent)
 		ImageColor3 = Color3.fromRGB(40, 40, 40),
 		ScaleType = Enum.ScaleType.Slice,
 		SliceCenter = Rect.new(100, 100, 100, 100),
-		SliceScale = 0.02,
+		SliceScale = 0.05,
 		Parent = main
 	})
 	
@@ -392,7 +392,7 @@ local function createBind(option, parent)
 		ImageColor3 = Color3.fromRGB(40, 40, 40),
 		ScaleType = Enum.ScaleType.Slice,
 		SliceCenter = Rect.new(100, 100, 100, 100),
-		SliceScale = 0.02,
+		SliceScale = 0.05,
 		Parent = main
 	})
 	
@@ -520,7 +520,7 @@ local function createSlider(option, parent)
 		ImageColor3 = Color3.fromRGB(30, 30, 30),
 		ScaleType = Enum.ScaleType.Slice,
 		SliceCenter = Rect.new(100, 100, 100, 100),
-		SliceScale = 0.02,
+		SliceScale = 0.05,
 		Parent = main
 	})
 	
@@ -530,7 +530,7 @@ local function createSlider(option, parent)
 		ImageColor3 = Color3.fromRGB(60, 60, 60),
 		ScaleType = Enum.ScaleType.Slice,
 		SliceCenter = Rect.new(100, 100, 100, 100),
-		SliceScale = 0.02,
+		SliceScale = 0.05,
 		Parent = slider
 	})
 	
@@ -555,7 +555,7 @@ local function createSlider(option, parent)
 		ImageColor3 = Color3.fromRGB(40, 40, 40),
 		ScaleType = Enum.ScaleType.Slice,
 		SliceCenter = Rect.new(100, 100, 100, 100),
-		SliceScale = 0.02,
+		SliceScale = 0.05,
 		Parent = main
 	})
 	
@@ -662,7 +662,7 @@ local function createList(option, parent, holder)
 		ImageColor3 = Color3.fromRGB(40, 40, 40),
 		ScaleType = Enum.ScaleType.Slice,
 		SliceCenter = Rect.new(100, 100, 100, 100),
-		SliceScale = 0.02,
+		SliceScale = 0.05,
 		Parent = main
 	})
 	
@@ -711,7 +711,7 @@ local function createList(option, parent, holder)
 		ImageColor3 = Color3.fromRGB(30, 30, 30),
 		ScaleType = Enum.ScaleType.Slice,
 		SliceCenter = Rect.new(100, 100, 100, 100),
-		SliceScale = 0.02,
+		SliceScale = 0.05,
 		Visible = false,
 		Parent = library.base
 	})
@@ -892,7 +892,7 @@ local function createBox(option, parent)
 		ImageColor3 = Color3.fromRGB(60, 60, 60),
 		ScaleType = Enum.ScaleType.Slice,
 		SliceCenter = Rect.new(100, 100, 100, 100),
-		SliceScale = 0.02,
+		SliceScale = 0.05,
 		Parent = main
 	})
 	
@@ -985,7 +985,7 @@ local function createColorPickerWindow(option)
 		ImageColor3 = Color3.fromRGB(30, 30, 30),
 		ScaleType = Enum.ScaleType.Slice,
 		SliceCenter = Rect.new(100, 100, 100, 100),
-		SliceScale = 0.02,
+		SliceScale = 0.05,
 		Parent = library.base
 	})
 		
@@ -1019,7 +1019,7 @@ local function createColorPickerWindow(option)
 		ImageTransparency = 1,
 		ScaleType = Enum.ScaleType.Slice,
 		SliceCenter = Rect.new(100, 100, 100, 100),
-		SliceScale = 0.02,
+		SliceScale = 0.05,
 		Parent = option.mainHolder
 	})
 	
@@ -1135,7 +1135,7 @@ local function createColorPickerWindow(option)
 		ImageColor3 = currentColor,
 		ScaleType = Enum.ScaleType.Slice,
 		SliceCenter = Rect.new(100, 100, 100, 100),
-		SliceScale = 0.02,
+		SliceScale = 0.05,
 		Parent = option.mainHolder
 	})
 	
@@ -1149,7 +1149,7 @@ local function createColorPickerWindow(option)
 		ImageColor3 = Color3.fromRGB(20, 20, 20),
 		ScaleType = Enum.ScaleType.Slice,
 		SliceCenter = Rect.new(100, 100, 100, 100),
-		SliceScale = 0.02,
+		SliceScale = 0.05,
 		Parent = option.mainHolder
 	})
 	
@@ -1191,7 +1191,7 @@ local function createColorPickerWindow(option)
 		ImageColor3 = Color3.fromRGB(20, 20, 20),
 		ScaleType = Enum.ScaleType.Slice,
 		SliceCenter = Rect.new(100, 100, 100, 100),
-		SliceScale = 0.02,
+		SliceScale = 0.05,
 		Parent = option.mainHolder
 	})
 	
@@ -1236,7 +1236,7 @@ local function createColorPickerWindow(option)
 		ImageColor3 = Color3.fromRGB(20, 20, 20),
 		ScaleType = Enum.ScaleType.Slice,
 		SliceCenter = Rect.new(100, 100, 100, 100),
-		SliceScale = 0.02,
+		SliceScale = 0.05,
 		Parent = option.mainHolder
 	})
 	
@@ -1278,7 +1278,7 @@ local function createColorPickerWindow(option)
 		ImageColor3 = Color3.fromRGB(20, 20, 20),
 		ScaleType = Enum.ScaleType.Slice,
 		SliceCenter = Rect.new(100, 100, 100, 100),
-		SliceScale = 0.02,
+		SliceScale = 0.05,
 		Parent = option.mainHolder
 	})
 	
@@ -1344,7 +1344,7 @@ local function createColor(option, parent, holder)
 		ImageColor3 = Color3.fromRGB(100, 100, 100),
 		ScaleType = Enum.ScaleType.Slice,
 		SliceCenter = Rect.new(100, 100, 100, 100),
-		SliceScale = 0.02,
+		SliceScale = 0.05,
 		Parent = option.main
 	})
 	
@@ -1356,7 +1356,7 @@ local function createColor(option, parent, holder)
 		ImageColor3 = option.color,
 		ScaleType = Enum.ScaleType.Slice,
 		SliceCenter = Rect.new(100, 100, 100, 100),
-		SliceScale = 0.02,
+		SliceScale = 0.05,
 		Parent = colorBoxOutline
 	})
 	
