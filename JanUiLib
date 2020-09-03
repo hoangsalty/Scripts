@@ -1598,11 +1598,16 @@ end
 function library:CreateWindow(title)
 	local window = {title = tostring(title), options = {}, open = true, canInit = true, init = false, position = #self.windows}
 	getFnctions(window)
+	
 	table.insert(library.windows, window)
+	
 	return window
 end
 
+local UIToggle
+local UnlockMouse
 function library:Init()
+	
 	self.base = self.base or self:Create("ScreenGui", {
 		Parent = game.CoreGui
 	})
@@ -1620,6 +1625,19 @@ function library:Init()
 			window.init = true
 			createOptionHolder(window.title, self.base, window)
 			loadOptions(window)
+		end
+	end
+end
+
+function library:Close()
+	self.open = not self.open
+	self.cursor.Visible = self.open
+	if self.activePopup then
+		self.activePopup:Close()
+	end
+	for _, window in next, self.windows do
+		if window.main then
+			window.main.Visible = self.open
 		end
 	end
 end
