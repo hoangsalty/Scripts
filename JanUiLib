@@ -1,5 +1,5 @@
+if game.CoreGui:FindFirstChild("ScreenGui") then game.CoreGui:FindFirstChild("ScreenGui"):Remove() end
 local library = {flags = {}, windows = {}, open = true}
-
 --Services
 local runService = game:GetService"RunService"
 local tweenService = game:GetService"TweenService"
