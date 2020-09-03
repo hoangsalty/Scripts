@@ -1604,7 +1604,7 @@ end
 
 function library:Init()
 	self.base = self.base or self:Create("ScreenGui", {
-        Parent = game.CoreGui
+        Parent = game.CoreGui,
         Name = "Lib UI"
 	})
 	
