@@ -389,15 +389,12 @@ function Lib:CreateWindow(Name)
 
         Text_6.Name = "Text"
         Text_6.Parent = Holder
-        Text_6.Active = false
         Text_6.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
         Text_6.BackgroundTransparency = 1
         Text_6.Position = UDim2.new(-0.0320001729, 0, 0.159999996, 0)
-        Text_6.Selectable = false
         Text_6.Size = UDim2.new(1, 0, 1, 0)
         Text_6.Font = Enum.Font.GothamBold
         Text_6.PlaceholderColor3 = Color3.fromRGB(200, 200, 200)
-        Text_6.PlaceholderText = "0"
         Text_6.Text = ""
         Text_6.TextColor3 = Color3.fromRGB(255, 255, 255)
         Text_6.TextSize = 12.000
