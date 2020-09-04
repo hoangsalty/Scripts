@@ -684,7 +684,7 @@ local function createList(option, parent, holder)
 		BackgroundTransparency = 1,
 		Text = option.value,
 		TextSize = 13,
-		Font = Enum.Font.Arial,
+		Font = Enum.Font.GothamBold,
 		TextColor3 = Color3.fromRGB(255, 255, 255),
 		TextXAlignment = Enum.TextXAlignment.Left,
 		Parent = main
@@ -1159,7 +1159,7 @@ local function createColorPickerWindow(option)
 		BackgroundTransparency = 1,
 		Text = "Reset",
 		TextTransparency = 1,
-		Font = Enum.Font.Code,
+		Font = Enum.Font.Gotham,
 		TextSize = 13,
 		TextColor3 = Color3.fromRGB(255, 255, 255),
 		Parent = option.resetColor
@@ -1201,7 +1201,7 @@ local function createColorPickerWindow(option)
 		BackgroundTransparency = 1,
 		Text = "Undo",
 		TextTransparency = 1,
-		Font = Enum.Font.Code,
+		Font = Enum.Font.Gotham,
 		TextSize = 15,
 		TextColor3 = Color3.fromRGB(255, 255, 255),
 		Parent = option.undoColor
@@ -1246,7 +1246,7 @@ local function createColorPickerWindow(option)
 		BackgroundTransparency = 1,
 		Text = "Set",
 		TextTransparency = 1,
-		Font = Enum.Font.Code,
+		Font = Enum.Font.Gotham,
 		TextSize = 13,
 		TextColor3 = Color3.fromRGB(255, 255, 255),
 		Parent = option.setColor
@@ -1288,7 +1288,7 @@ local function createColorPickerWindow(option)
 		BackgroundTransparency = 1,
 		Text = "Rainbow",
 		TextTransparency = 1,
-		Font = Enum.Font.Code,
+		Font = Enum.Font.Gotham,
 		TextSize = 13,
 		TextColor3 = Color3.fromRGB(255, 255, 255),
 		Parent = option.rainbow
