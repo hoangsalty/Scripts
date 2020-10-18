@@ -4,14 +4,14 @@ if not pcall(function() readfile(FileName) end) then
     local DefaultSettings = { --This is the table that has the default settings
     CustomD = false,
     Mission = "Crabby Crusade",
-    Redo = true,
-    Equip = true,
-    Sell = true,
+    Redo = false,
+    Equip = false,
+    Sell = false,
     UpgradeLimit = 1,
-    Common = true,
-    Uncommon = true,
-    Rare = true,
-    Epic = true,
+    Common = false,
+    Uncommon = false,
+    Rare = false,
+    Epic = false,
     }
     writefile(FileName, game:service'HttpService':JSONEncode(DefaultSettings)) 
 end
@@ -696,6 +696,10 @@ if game.Players:FindFirstChild(Player.Name) then
             Farm()
         end
     end
+end
+
+if syn then
+    syn.queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/hoangsalty/Scripts/master/WZAutoFarm.lua"))()')
 end
 
 library:Init()
