@@ -4,9 +4,9 @@ if not pcall(function() readfile(FileName) end) then
     local DefaultSettings = { --This is the table that has the default settings
     CustomD = false,
     Mission = "Crabby Crusade",
-    Redo = false,
-    Equip = false,
-    Sell = false,
+    Redo = true,
+    Equip = true,
+    Sell = true,
     UpgradeLimit = 1,
     Common = false,
     Uncommon = false,
