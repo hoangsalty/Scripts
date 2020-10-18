@@ -12,14 +12,15 @@ if not pcall(function() readfile(FileName) end) then
     Uncommon = false,
     Rare = false,
     Epic = false,
+    START = false,
     }
-    writefile(FileName, game:service'HttpService':JSONEncode(DefaultSettings)) 
+    writefile(FileName, game:GetService("HttpService"):JSONEncode(DefaultSettings)) 
 end
 
-local JSON = game:service'HttpService':JSONDecode(readfile(FileName)) 
+local JSON = game:GetService("HttpService"):JSONDecode(readfile(FileName)) 
 
 function Save()
-    writefile(FileName, game:service'HttpService':JSONEncode(JSON))
+    writefile(FileName, game:GetService("HttpService"):JSONEncode(JSON))
 end
 
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/hoangsalty/Scripts/master/Lib%20UI.lua", true))()
@@ -674,29 +675,35 @@ function Farm()
     end)
 end
 
-if game.Players:FindFirstChild(Player.Name) then
-    if game.PlaceId == 2727067538 then
-        repeat wait() until game.ReplicatedStorage.ProfileCollections:FindFirstChild(Player.Name)
-        for i,v in next, game.ReplicatedStorage.ProfileCollections[Player.Name].Profiles:GetChildren() do
-            if v:FindFirstChild("Selected") and v:FindFirstChild("GUID") and v.Selected.Value == true then
-                game.ReplicatedStorage.Shared.Teleport.JoinGame:FireServer(v.GUID.Value)
-            end
-        end
-    else
-        repeat wait() until workspace.Characters:FindFirstChild(Player.Name)
-        repeat wait() until Player.Character
-        repeat wait() until Player.Character:FindFirstChild("Collider")
-        if workspace:FindFirstChild("MenuRings") then
-            if JSON.CustomD == true then
-                game.ReplicatedStorage.Shared.Teleport.StartRaid:FireServer(missions(JSON.Mission))
+window:AddToggle({text = "START", state = JSON.START, callback = function(a)
+    JSON.START = a
+    Save()
+    if JSON.START == true then
+        if game.Players:FindFirstChild(Player.Name) then
+            if game.PlaceId == 2727067538 then
+                repeat wait() until game.ReplicatedStorage.ProfileCollections:FindFirstChild(Player.Name)
+                for i,v in next, game.ReplicatedStorage.ProfileCollections[Player.Name].Profiles:GetChildren() do
+                    if v:FindFirstChild("Selected") and v:FindFirstChild("GUID") and v.Selected.Value == true then
+                        game.ReplicatedStorage.Shared.Teleport.JoinGame:FireServer(v.GUID.Value)
+                    end
+                end
             else
-                game.ReplicatedStorage.Shared.Teleport.StartRaid:FireServer(autoMissions())
+                repeat wait() until workspace.Characters:FindFirstChild(Player.Name)
+                repeat wait() until Player.Character
+                repeat wait() until Player.Character:FindFirstChild("Collider")
+                if workspace:FindFirstChild("MenuRings") then
+                    if JSON.CustomD == true then
+                        game.ReplicatedStorage.Shared.Teleport.StartRaid:FireServer(missions(JSON.Mission))
+                    else
+                        game.ReplicatedStorage.Shared.Teleport.StartRaid:FireServer(autoMissions())
+                    end
+                else
+                    Farm()
+                end
             end
-        else
-            Farm()
         end
     end
-end
+end})
 
 if syn then
     syn.queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/hoangsalty/Scripts/master/WZAutoFarm.lua"))()')
