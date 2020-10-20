@@ -1,3 +1,7 @@
+if game.CoreGui:FindFirstChildWhichIsA("ScreenGui"):FindFirstChild("MainFrame") then
+    game.CoreGui:FindFirstChildWhichIsA("ScreenGui"):Remove()
+end
+
 local library = {}
 
 local ts = game:GetService("TweenService")
@@ -599,7 +603,7 @@ function library:Create(name, size)
 		Indicator.Parent = Sliding
 		Indicator.AnchorPoint = Vector2.new(0.5, 0.5)
 		Indicator.BackgroundColor3 = Color3.new(1, 1, 1)
-		Indicator.Position = UDim2.new(0, 0, 0, 0)
+		Indicator.Position = UDim2.new(0.5, 0, 0.5, 0)
 		Indicator.Size = UDim2.new(0, 16, 0, 16)
 		
 		local indicatorround = Instance.new("UICorner", Indicator)
