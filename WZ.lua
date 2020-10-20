@@ -1,3 +1,6 @@
+repeat wait() until game.Players.LocalPlayer
+while not game:IsLoaded() do game.Loaded:wait() end
+
 local FileName = "wz_autofarm_settings.lua" --The name of our file that will be in our exploits workspace folder
 
 if not pcall(function() readfile(FileName) end) then
@@ -99,9 +102,6 @@ window:Toggle("Epic", "Sell Epic", JSON.Epic, function(a)
     JSON.Epic = a
     Save()
 end)
-
-repeat wait() until game.Players.LocalPlayer
-while not game:IsLoaded() do game.Loaded:wait() end
 
 function WaitForChild(Parent, ChildName)
     if Parent:FindFirstChild(ChildName) then
