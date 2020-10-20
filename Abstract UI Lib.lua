@@ -575,7 +575,7 @@ function library:Create(name, size)
 		ButtonName.BackgroundColor3 = Color3.new(1, 1, 1)
 		ButtonName.BackgroundTransparency = 1
 		ButtonName.Position = UDim2.new(0, 10, 0, 0)
-		ButtonName.Size = UDim2.new(0, 0, 0.5, 0)
+		ButtonName.Size = UDim2.new(0.5, 0, 0.5, 0)
 		ButtonName.Font = Enum.Font.SourceSansSemibold
 		ButtonName.Text = name
 		ButtonName.TextColor3 = Color3.new(1, 1, 1)
@@ -589,7 +589,7 @@ function library:Create(name, size)
 		Description.BackgroundColor3 = Color3.new(1, 1, 1)
 		Description.BackgroundTransparency = 1
 		Description.Position = UDim2.new(0, 10, 1, 0)
-		Description.Size = UDim2.new(0, 0, 0.5, 0)
+		Description.Size = UDim2.new(0.5, 0, 0.5, 0)
 		Description.Font = Enum.Font.SourceSansSemibold
 		Description.Text = description
 		Description.TextColor3 = library.descriptiontext
@@ -629,7 +629,7 @@ function library:Create(name, size)
 		Value.AnchorPoint = Vector2.new(1, 1)
 		Value.BackgroundTransparency = 1
 		Value.Position = UDim2.new(1, -5, 0.5, 0)
-		Value.Size = UDim2.new(0, 0, 0.5, 0)
+		Value.Size = UDim2.new(0.5, 0, 0.5, 0)
 		Value.Font = Enum.Font.SourceSansSemibold
 		Value.Text = string.format("%d / %d", default, max)
 		Value.TextColor3 = library.descriptiontext
@@ -637,7 +637,7 @@ function library:Create(name, size)
 		Value.TextXAlignment = Enum.TextXAlignment.Right
 		
 		local down
-		local percentage = 0
+		local percentage = 0.5
 		local value
 		
 		Slider.MouseButton1Down:connect(function()
