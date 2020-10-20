@@ -534,7 +534,9 @@ function library:Create(name, size)
 				end)
 			end)
 		end)
-		
+
+		updatescroll()
+
 		local mt = {
 			__newindex = function(d, i, v)
 				print(d, i, v)
@@ -546,8 +548,6 @@ function library:Create(name, size)
 		local dropdownlib = {}
 		setmetatable(dropdownlib, mt)
 		return dropdownlib
-		
-		updatescroll()
 	end
 	
 	function features:Slider(name, description, min, max, default, callback)
