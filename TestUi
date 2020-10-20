@@ -537,7 +537,7 @@ function library:Create(name, size)
 		description = description or ""
 		min = min or 0
 		max = max or 100
-		default = default or max / 2 or 50
+		default = default
 		callback = callback or function() end
 			
 		local Slider = Instance.new("TextButton")
