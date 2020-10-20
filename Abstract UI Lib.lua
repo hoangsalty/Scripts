@@ -615,7 +615,7 @@ function library:Create(name, size)
 		local Indicator = Instance.new("Frame")
 		Indicator.Name = "Indicator"
 		Indicator.Parent = Sliding
-		Indicator.AnchorPoint = Vector2.new(0.5, 0.5)
+		Indicator.AnchorPoint = Vector2.new(0, 0.5)
 		Indicator.BackgroundColor3 = Color3.new(1, 1, 1)
 		Indicator.Position = UDim2.new(0, 0, 0.5, 0)
 		Indicator.Size = UDim2.new(0, 16, 0, 16)
