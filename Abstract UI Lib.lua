@@ -555,7 +555,7 @@ function library:Create(name, size)
 		description = description or ""
 		min = min or 0
 		max = max or 100
-		default = default
+		default = default or max / 2 or 50
 		callback = callback or function() end
 			
 		local Slider = Instance.new("TextButton")
@@ -610,7 +610,7 @@ function library:Create(name, size)
 		Sliding.TextSize = 14
 		
 		local slidinground = Instance.new("UICorner", Sliding)
-		slidinground.CornerRadius = UDim.new(0, 10)
+		slidinground.CornerRadius = UDim.new(0, 2)
 		
 		local Indicator = Instance.new("Frame")
 		Indicator.Name = "Indicator"
