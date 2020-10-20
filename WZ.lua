@@ -78,7 +78,7 @@ window:Toggle("Enable", "Turn On AutoSell", JSON.Sell, function(state)
     Save()
 end)
 
-window:Slider("Upgrade Limit", "Sell Lower Max Upgrade", 1, 10, 1, function(state)
+window:Slider("Upgrade Limit", "Sell Lower Max Upgrade", 1, 10, JSON.UpgradeLimit, function(state)
     JSON.UpgradeLimit = state
     Save()
 end)
