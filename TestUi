@@ -592,7 +592,7 @@ function library:Create(name, size)
 		Sliding.TextSize = 14
 		
 		local slidinground = Instance.new("UICorner", Sliding)
-		slidinground.CornerRadius = UDim.new(0, 2)
+		slidinground.CornerRadius = UDim.new(0, 100)
 		
 		local Indicator = Instance.new("Frame")
 		Indicator.Name = "Indicator"
