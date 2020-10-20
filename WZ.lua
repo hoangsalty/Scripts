@@ -1,7 +1,7 @@
 repeat wait() until game.Players.LocalPlayer
 while not game:IsLoaded() do game.Loaded:wait() end
 
-local FileName = "wz_autofarm_settings.lua" --The name of our file that will be in our exploits workspace folder
+local FileName = "settings.lua" --The name of our file that will be in our exploits workspace folder
 
 if not pcall(function() readfile(FileName) end) then
     local DefaultSettings = { --This is the table that has the default settings
@@ -26,7 +26,7 @@ function Save()
     writefile(FileName, game:GetService("HttpService"):JSONEncode(JSON))
 end
 
-local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/hoangsalty/Scripts/master/Abstract%20UI%20Lib.lua", true))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/hoangsalty/Scripts/master/Abstract%20UI%20Lib.lua"))()
 local window = library:Create("World Zero", UDim2.new(0, 350, 0, 400))
 
 window:Divider("Settings")
