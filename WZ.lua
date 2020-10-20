@@ -717,5 +717,5 @@ if JSON.START == true then
 end
 
 if syn then
-    syn.queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/hoangsalty/Scripts/master/WZAutoFarm.lua"))()')
+    syn.queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/hoangsalty/Scripts/master/WZ.lua"))()')
 end
