@@ -494,8 +494,7 @@ function library:Create(name, size)
 				spawn(function()
 					callback(v)
 				end)
-            end)
-            local hovered = ts:Create(Option, ti(0.2), {BackgroundColor3 = library.buttoncontainerhovered})
+			end)			
 		end
 		
 		local hovered = ts:Create(Dropdown, ti(0.2), {BackgroundColor3 = library.buttoncontainerhovered})
