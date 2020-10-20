@@ -656,9 +656,7 @@ function library:Create(name, size)
 		connection = is.InputEnded:connect(function(input)
 			if input.UserInputType == Enum.UserInputType.MouseButton1 and UILIB then
                 down = false
-                pcall(function()
-				    Indicator:TweenPosition(UDim2.new(percentage, 0, 0.5, 0), Enum.EasingDirection.InOut, Enum.EasingStyle.Linear, 0.02) 
-                end
+				Indicator:TweenPosition(UDim2.new(percentage, 0, 0.5, 0), Enum.EasingDirection.InOut, Enum.EasingStyle.Linear, 0.02) 
             elseif not UILIB then
 				connection:Disconnect()
 			end
