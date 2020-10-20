@@ -535,6 +535,18 @@ function library:Create(name, size)
 			end)
 		end)
 		
+		local mt = {
+			__newindex = function(d, i, v)
+				print(d, i, v)
+				if i == "Description" then
+					Description.Text = v            
+				end
+			end
+		}
+		local dropdownlib = {}
+		setmetatable(dropdownlib, mt)
+		return dropdownlib
+		
 		updatescroll()
 	end
 	
