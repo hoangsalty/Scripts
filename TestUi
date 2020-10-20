@@ -33,10 +33,10 @@ function library:Create(name, size)
 	name = name or "UILibrary"
 	size = size or UDim2.new(0, 400, 0, 450)
 	local UILIB = Instance.new("ScreenGui")
-	UILIB.Name = tostring(game:GetService("HttpService"):GenerateGUID(true))
+	UILIB.Name = game:GetService("HttpService"):GenerateGUID(true)
 	UILIB.Parent = game.CoreGui
 	UILIB.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-        UILIB.ResetOnSpawn = false
+    UILIB.ResetOnSpawn = false
 	local MainFrame = Instance.new("Frame")
 	MainFrame.Name = "MainFrame"
 	MainFrame.Parent = UILIB
