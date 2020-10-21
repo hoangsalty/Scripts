@@ -616,13 +616,8 @@ function library:Create(name, size)
 		Indicator.Name = "Indicator"
 		Indicator.Parent = Sliding
 		Indicator.BackgroundColor3 = Color3.new(1, 1, 1)
-		if default == max then
-			Indicator.AnchorPoint = Vector2.new(1, 0.5)
-			Indicator.Position = UDim2.new(1, 0, 0.5, 0)
-		else
-			Indicator.AnchorPoint = Vector2.new(0, 0.5)
-			Indicator.Position = UDim2.new(0, 0, 0.5, 0)
-		end
+		Indicator.AnchorPoint = Vector2.new(0.1, 0.5)
+		Indicator.Position = UDim2.new(0.1, 0, 0.5, 0)
 		Indicator.Size = UDim2.new(0, 16, 0, 16)
 		
 		local indicatorround = Instance.new("UICorner", Indicator)
@@ -647,11 +642,7 @@ function library:Create(name, size)
 		Slider.MouseButton1Down:connect(function()
 			down = true
 			while down and rs.RenderStepped:wait() do
-				if default == max then
-					percentage = 1
-				else
-					percentage = math.clamp(((mouse.X - Sliding.AbsolutePosition.X) / Sliding.AbsoluteSize.X), 0, 1)
-				end
+				percentage = math.clamp(((mouse.X - Sliding.AbsolutePosition.X) / Sliding.AbsoluteSize.X), 0, 1)
 				Indicator:TweenPosition(UDim2.new(percentage, 0, 0.5, 0), Enum.EasingDirection.InOut, Enum.EasingStyle.Linear, 0.05)
 				value = (percentage * (max - min)) + min
 				Value.Text = string.format("%d / %d", value, max)
