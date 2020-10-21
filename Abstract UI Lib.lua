@@ -609,15 +609,12 @@ function library:Create(name, size)
 		Sliding.TextColor3 = Color3.new(0, 0, 0)
 		Sliding.TextSize = 14
 		
-		local slidinground = Instance.new("UICorner", Sliding)
-		slidinground.CornerRadius = UDim.new(0, 2)
-		
 		local Indicator = Instance.new("Frame")
 		Indicator.Name = "Indicator"
 		Indicator.Parent = Sliding
 		Indicator.BackgroundColor3 = Color3.new(1, 1, 1)
-		Indicator.AnchorPoint = Vector2.new(0.1, 0.4)
-		Indicator.Position = UDim2.new(0.1, 0, 0.4, 0)
+		Indicator.AnchorPoint = Vector2.new(0, 0.5)
+		Indicator.Position = UDim2.new(0, 0, 0.5, 0)
 		Indicator.Size = UDim2.new(0, 16, 0, 16)
 		
 		local indicatorround = Instance.new("UICorner", Indicator)
@@ -637,7 +634,7 @@ function library:Create(name, size)
 		Value.TextXAlignment = Enum.TextXAlignment.Right
 		
 		local down
-		local percentage = 0
+		local percentage = 0.5
 		local value
 		Slider.MouseButton1Down:connect(function()
 			down = true
