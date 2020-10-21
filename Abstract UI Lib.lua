@@ -609,9 +609,6 @@ function library:Create(name, size)
 		Sliding.TextColor3 = Color3.new(0, 0, 0)
 		Sliding.TextSize = 14
 
-		local indicatorround = Instance.new("UICorner", Indicator)
-		slidinground.CornerRadius = UDim.new(0, 2)
-
 		local Indicator = Instance.new("Frame")
 		Indicator.Name = "Indicator"
 		Indicator.Parent = Sliding
@@ -621,7 +618,7 @@ function library:Create(name, size)
 		Indicator.Size = UDim2.new(0, 16, 0, 16)
 		
 		local indicatorround = Instance.new("UICorner", Indicator)
-		slidinground.CornerRadius = UDim.new(0, 100)
+		slidinground.CornerRadius = UDim.new(0, 2)
 		
 		local Value = Instance.new("TextLabel")
 		Value.Name = "Value"
