@@ -644,7 +644,11 @@ function library:Create(name, size)
 		local down
 		local percentage = 0
 		local value
-
+		if default == max then
+			percentage = 1
+		else
+			percentage = 0
+		end
 		Slider.MouseButton1Down:connect(function()
 			down = true
 			while down and rs.RenderStepped:wait() do
