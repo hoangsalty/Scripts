@@ -621,7 +621,7 @@ function library:Create(name, size)
 		Indicator.Size = UDim2.new(0, 16, 0, 16)
 		
 		local indicatorround = Instance.new("UICorner", Indicator)
-		slidinground.CornerRadius = UDim.new(0, 100)
+		slidinground.CornerRadius = UDim.new(0, 80)
 		
 		local Value = Instance.new("TextLabel")
 		Value.Name = "Value"
