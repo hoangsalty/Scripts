@@ -608,12 +608,12 @@ function library:Create(name, size)
 		Sliding.Text = ""
 		Sliding.TextColor3 = Color3.new(0, 0, 0)
 		Sliding.TextSize = 14
-		
+
 		local Indicator = Instance.new("Frame")
 		Indicator.Name = "Indicator"
 		Indicator.Parent = Sliding
-		Indicator.BackgroundColor3 = Color3.new(1, 1, 1)
 		Indicator.AnchorPoint = Vector2.new(0, 0.5)
+		Indicator.BackgroundColor3 = Color3.new(1, 1, 1)
 		Indicator.Position = UDim2.new(0, 0, 0.5, 0)
 		Indicator.Size = UDim2.new(0, 16, 0, 16)
 		
@@ -634,8 +634,9 @@ function library:Create(name, size)
 		Value.TextXAlignment = Enum.TextXAlignment.Right
 		
 		local down
-		local percentage = 0.5
+		local percentage = 0
 		local value
+		
 		Slider.MouseButton1Down:connect(function()
 			down = true
 			while down and rs.RenderStepped:wait() do
