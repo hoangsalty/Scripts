@@ -1,9 +1,3 @@
-for i,v in next, game.CoreGui:GetChildren() do
-    if v:FindFirstChild("UIFrame") then
-        v:Remove()
-    end
-end
-
 local library = {}
 
 local ts = game:GetService("TweenService")
@@ -39,12 +33,12 @@ function library:Create(name, size)
 	name = name or "UILibrary"
 	size = size or UDim2.new(0, 400, 0, 450)
 	local UILIB = Instance.new("ScreenGui")
-	UILIB.Name = game:GetService("HttpService"):GenerateGUID(true)
+	UILIB.Name = "UILIB"
 	UILIB.Parent = game.CoreGui
 	UILIB.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-    UILIB.ResetOnSpawn = false
+        UILIB.ResetOnSpawn = false
 	local MainFrame = Instance.new("Frame")
-	MainFrame.Name = "UIFrame"
+	MainFrame.Name = "MainFrame"
 	MainFrame.Parent = UILIB
 	MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 	MainFrame.BackgroundColor3 = library.mainframe
@@ -105,6 +99,28 @@ function library:Create(name, size)
 	Topbar.Size = UDim2.new(1, 0, 0, 25)
 	
 	library:addRound(Topbar)
+
+	local CloseUI = Instance.new("ImageButton")
+	CloseUI.Parent = Topbar
+	CloseUI.AnchorPoint = Vector2.new(1, 0.5)
+	CloseUI.Position = UDim2.new(1, 0, 0.5, 0)
+	CloseUI.Image = "http://www.roblox.com/asset/?id=5840446794"
+	CloseUI.BackgroundTransparency = 1
+	CloseUI.Size = UDim2.new(0, 25, 0, 25)
+	CloseUI.ImageColor3 = Color3.fromRGB(255, 255, 255)
+	CloseUI.ZIndex = 2
+	CloseUI.MouseEnter:connect(function()
+		CloseUI.Size = UDim2.new(0, 27, 0, 27)
+		CloseUI.Position = UDim2.new(1, 1, 0.5, 0)
+	end)
+	CloseUI.MouseLeave:connect(function()
+		CloseUI.Size = UDim2.new(0, 25, 0, 25)
+		CloseUI.Position = UDim2.new(1, 0, 0.5, 0)
+	end)
+	CloseUI.MouseButton1Click:connect(function()
+		UILIB:Destroy()
+		UILIB = nil
+	end)
 
 	local TextLabel = Instance.new("TextLabel")
 	TextLabel.Parent = Topbar
@@ -534,10 +550,10 @@ function library:Create(name, size)
 				end)
 			end)
 		end)
-
-		updatescroll()
-
-		local mt = {
+		
+        updatescroll()
+        
+        local mt = {
 			__newindex = function(d, i, v)
 				print(d, i, v)
 				if i == "Description" then
@@ -547,7 +563,7 @@ function library:Create(name, size)
 		}
 		local dropdownlib = {}
 		setmetatable(dropdownlib, mt)
-		return dropdownlib
+        return dropdownlib
 	end
 	
 	function features:Slider(name, description, min, max, default, callback)
@@ -637,7 +653,7 @@ function library:Create(name, size)
 		Value.TextXAlignment = Enum.TextXAlignment.Right
 		
 		local down
-		local percentage = 0.5
+		local percentage = 0
 		local value
 		
 		Slider.MouseButton1Down:connect(function()
