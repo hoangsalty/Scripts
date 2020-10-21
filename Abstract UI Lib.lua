@@ -637,7 +637,7 @@ function library:Create(name, size)
 		Value.TextXAlignment = Enum.TextXAlignment.Right
 		
 		local down
-		local percentage = 0.5
+		local percentage = 0
 		local value
 		
 		Slider.MouseButton1Down:connect(function()
