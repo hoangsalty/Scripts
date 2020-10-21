@@ -617,7 +617,11 @@ function library:Create(name, size)
 		Indicator.Parent = Sliding
 		Indicator.AnchorPoint = Vector2.new(0, 0.5)
 		Indicator.BackgroundColor3 = Color3.new(1, 1, 1)
-		Indicator.Position = UDim2.new(0, 0, 0.5, 0)
+		if default == max then
+			Indicator.Position = UDim2.new(1, 0, 0.5, 0)
+		else
+			Indicator.Position = UDim2.new(0, 0, 0.5, 0)
+		end
 		Indicator.Size = UDim2.new(0, 16, 0, 16)
 		
 		local indicatorround = Instance.new("UICorner", Indicator)
@@ -639,9 +643,7 @@ function library:Create(name, size)
 		local down
 		local percentage = 0
 		local value
-		if default == max then
-			percentage = 1
-		end
+
 		Slider.MouseButton1Down:connect(function()
 			down = true
 			while down and rs.RenderStepped:wait() do
