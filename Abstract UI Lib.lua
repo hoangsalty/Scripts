@@ -644,15 +644,14 @@ function library:Create(name, size)
 		local down
 		local percentage = 0
 		local value
-		if default == max then
-			percentage = 1
-		else
-			percentage = 0
-		end
 		Slider.MouseButton1Down:connect(function()
 			down = true
 			while down and rs.RenderStepped:wait() do
-				percentage = math.clamp(((mouse.X - Sliding.AbsolutePosition.X) / Sliding.AbsoluteSize.X), 0, 1)
+				if default == max then
+					percentage = 1
+				else
+					percentage = math.clamp(((mouse.X - Sliding.AbsolutePosition.X) / Sliding.AbsoluteSize.X), 0, 1)
+				end
 				Indicator:TweenPosition(UDim2.new(percentage, 0, 0.5, 0), Enum.EasingDirection.InOut, Enum.EasingStyle.Linear, 0.05)
 				value = (percentage * (max - min)) + min
 				Value.Text = string.format("%d / %d", value, max)
