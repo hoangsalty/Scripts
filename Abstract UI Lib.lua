@@ -1,3 +1,9 @@
+for i,v in next, game.CoreGui:GetChildren() do
+    if v:FindFirstChild("UILIB") then
+        v:Remove()
+    end
+end
+
 local library = {}
 
 local ts = game:GetService("TweenService")
@@ -33,12 +39,12 @@ function library:Create(name, size)
 	name = name or "UILibrary"
 	size = size or UDim2.new(0, 400, 0, 450)
 	local UILIB = Instance.new("ScreenGui")
-	UILIB.Name = "UILIB"
+	UILIB.Name = game:GetService("HttpService"):GenerateGUID(true)
 	UILIB.Parent = game.CoreGui
-	UILIB.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-        UILIB.ResetOnSpawn = false
+    UILIB.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    UILIB.ResetOnSpawn = false
 	local MainFrame = Instance.new("Frame")
-	MainFrame.Name = "MainFrame"
+	MainFrame.Name = "UILIB"
 	MainFrame.Parent = UILIB
 	MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 	MainFrame.BackgroundColor3 = library.mainframe
@@ -631,7 +637,7 @@ function library:Create(name, size)
 		local Indicator = Instance.new("Frame")
 		Indicator.Name = "Indicator"
 		Indicator.Parent = Sliding
-		Indicator.AnchorPoint = Vector2.new(0, 0.5)
+		Indicator.AnchorPoint = Vector2.new(0.5, 0.5)
 		Indicator.BackgroundColor3 = Color3.new(1, 1, 1)
 		Indicator.Position = UDim2.new(0, 0, 0.5, 0)
 		Indicator.Size = UDim2.new(0, 16, 0, 16)
