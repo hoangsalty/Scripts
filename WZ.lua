@@ -316,7 +316,7 @@ function Farm()
     end
 
     function trigger()
-        if workspace:FindFirstChild("MissionObjects") then
+        if workspace:FindFirstChild("MissionObjects") and not workspace:FindFirstChild("Map") then
             for i,v in next, workspace.MissionObjects:GetDescendants() do
                 if v.Name == "Cutscenes" or v.Name == "WaterKillPart" or v.Name == "CliffsideFallTriggers" then 
                     v:Remove()
@@ -335,21 +335,23 @@ function Farm()
                     game:GetService("RunService").Heartbeat:wait()
                 end
             end
+        else
             if workspace:FindFirstChild("Map") then
                 for i,v in next, workspace.Map:GetChildren() do
                     if v.Name == "Exit" and v:FindFirstChild("BoundingBox") then
                         Update()
-                        firetouchinterest(Collider, v.BoundingBox, 0)
-                        firetouchinterest(Collider, v.BoundingBox, 1)
-                        game:GetService("RunService").Heartbeat:wait()
+                        if (Collider.Position - v.BoundingBox.Position).magnitude > 50 then
+                            firetouchinterest(Collider, v.BoundingBox, 0)
+                            firetouchinterest(Collider, v.BoundingBox, 1)
+                        end
                     end
                 end
-                
                 for i,v in next, workspace:GetChildren() do
                     if v.Name:find("KeyChest") and v:FindFirstChild("ChestBase") then
+                        if getmob() then break end
                         if v.ChestBase:FindFirstChild("ChestOpen") then v.ChestBase:Remove() break end
                         Update()
-                        Collider.CFrame = v.ChestBase.CFrame - v.ChestBase.CFrame.lookVector*-30 + Vector3.new(0,2,0)
+                        Collider.CFrame = v.ChestBase.CFrame - v.ChestBase.CFrame.lookVector*-30 + Vector3.new(0,3,0)
                     end
                 end
             end
@@ -358,18 +360,6 @@ function Farm()
 
     function sell()
         Update()
-        function check(table, target)
-            if #table ~= 0 then
-                for i,v in next, table do
-                    if v:lower() == target then
-                        return true
-                    end
-                end
-                return false
-            else
-                return false
-            end
-        end
         local Items = Player.PlayerGui.MainGui.Inventory.Items.ItemFrame
         local Inv = Profile.Inventory.Items
         for i,v in next, Items:GetChildren() do
@@ -399,35 +389,16 @@ function Farm()
     
     function equip()
         Update()
-        repeat game:GetService("RunService").Heartbeat:wait() until Profile:FindFirstChild("Equip") and Profile:FindFirstChild("Inventory")
-        
-	    function primWeapon()
-            for i,v in next, Profile.Equip.Primary:GetChildren() do
-                if v:IsA("Folder") ~= nil then
-                    return v
-                end
-            end
-        end
-        
-        function primArmor()
-            for i,v in next, Profile.Equip.Armor:GetChildren() do
-                if v:IsA("Folder") ~= nil then
-                    return v
-                end
-            end
-        end
-        
-        local maxWeapon = require(game.ReplicatedStorage.Shared.Combat):GetItemStats(primWeapon()).Attack
-        local maxArmor = require(game.ReplicatedStorage.Shared.Combat):GetItemStats(primArmor()).Defense
-
         for i,v in next, Profile.Inventory.Items:GetChildren() do
             if v:FindFirstChild("Level") and v:FindFirstChild("UpgradeLimit") then
+                local maxWeapon = require(game.ReplicatedStorage.Shared.Combat):GetItemStats(Profile.Equip.Primary:FindFirstChildWhichIsA("Folder")).Attack
+                local maxArmor = require(game.ReplicatedStorage.Shared.Combat):GetItemStats(Profile.Equip.Armor:FindFirstChildWhichIsA("Folder")).Defense        
                 local invWeapon = require(game.ReplicatedStorage.Shared.Combat):GetItemStats(v).Attack
                 local invArmor = require(game.ReplicatedStorage.Shared.Combat):GetItemStats(v).Defense
-                if invWeapon ~= nil and tonumber(invWeapon) > tonumber(maxWeapon) then
+                if invWeapon ~= nil and maxWeapon ~= nil and tonumber(invWeapon) > tonumber(maxWeapon) then
                     game.ReplicatedStorage.Shared.Inventory.EquipItem:FireServer(v, Profile.Equip["Primary"])
                 end
-                if invArmor ~= nil and tonumber(invArmor) > tonumber(maxArmor) then
+                if invArmor ~= nil and maxArmor ~= nil and tonumber(invArmor) > tonumber(maxArmor) then
                     game.ReplicatedStorage.Shared.Inventory.EquipItem:FireServer(v, Profile.Equip["Armor"])
                 end
             end
@@ -502,7 +473,7 @@ function Farm()
                     local mag = (Collider.Position - v.Collider.Position).magnitude
                     if mag <= 80 then
                         table.insert(mobs, v)
-                        table.insert(vectors, Vector3.new(99999,999999,999999))
+                        table.insert(vectors, Vector3.new(99999,99999,99999))
                     end
                 end
             end
@@ -511,7 +482,7 @@ function Farm()
                     local mag = (Collider.Position - v.PrimaryPart.Position).magnitude
                     if mag <= 80 then
                         table.insert(mobs, v)
-                        table.insert(vectors, Vector3.new(99999,999999,999999))
+                        table.insert(vectors, Vector3.new(99999,99999,99999))
                     end
                 end
             end
@@ -523,7 +494,7 @@ function Farm()
                                 local mag = (Collider.Position - v1.PrimaryPart.Position).magnitude
                                 if mag <= 80 then
                                     table.insert(mobs, v1)
-                                    table.insert(vectors, Vector3.new(99999,999999,999999))
+                                    table.insert(vectors, Vector3.new(99999,99999,99999))
                                 end
                             end
                         end
@@ -533,7 +504,7 @@ function Farm()
                                 local mag = (Collider.Position - v1.PrimaryPart.Position).magnitude
                                 if mag <= 80 then
                                     table.insert(mobs, v1)
-                                    table.insert(vectors, Vector3.new(99999,999999,999999))
+                                    table.insert(vectors, Vector3.new(99999,99999,99999))
                                 end
                             end
                         end
@@ -541,7 +512,7 @@ function Farm()
                         local mag = (Collider.Position - v.PrimaryPart.Position).magnitude
                         if mag <= 80 then
                             table.insert(mobs, v)
-                            table.insert(vectors, Vector3.new(99999,999999,999999))
+                            table.insert(vectors, Vector3.new(99999,99999,99999))
                         end
                     end
                 end
@@ -564,6 +535,13 @@ function Farm()
     
     spawn(function()
         while game:GetService("RunService").Heartbeat:wait() do
+            for i,v in next, workspace.Coins:GetDescendants() do
+                if v:IsA("Part") or v:IsA("MeshPart") or v:IsA("BasePart") then
+                    Update()
+                    v.Transparency = 1
+                    v.CFrame = Collider.CFrame + Vector3.new(0,-2,0)
+                end
+            end
             if game.ReplicatedStorage:FindFirstChild("FloorCounter") then
                 local playerHasExtra = game.ReplicatedStorage.Shared.VIP.IsExtraDrop:InvokeServer(Player)
                 local currentFloor = game.ReplicatedStorage.FloorCounter.Value
@@ -593,20 +571,6 @@ function Farm()
                         game.ReplicatedStorage.Shared.Chests.OpenChest:FireServer(i)
                     end
                 end
-            else
-                break
-            end
-        end
-    end)
-
-    spawn(function()
-        while game:GetService("RunService").Heartbeat:wait() do
-            for i,v in next, workspace.Coins:GetDescendants() do
-                if v:IsA("Part") then
-                    Update()
-                    v.Transparency = 1
-                    v.CFrame = Collider.CFrame + Vector3.new(0,-5,0)
-                end
             end
         end
     end)
@@ -635,8 +599,7 @@ function Farm()
             end
         end
     end
-    stuff()
-    
+
     local oldPosBoss = nil
     workspace.Mobs.ChildAdded:connect(function(v)
         if game.PlaceId ~= 4050468028 and v:IsA("Model") and v.Parent and (v.Name:lower():find("boss") or v.Name == "MagmaGigaBlob" or v.Name == "FireCastleCommander") and not v:FindFirstChild("NoHealthbar") and v:FindFirstChild("Collider") and v:FindFirstChild("FromSpawnPart") and v:FindFirstChild("HealthProperties") and v:FindFirstChild("MobProperties") and v.MobProperties:FindFirstChild("Busy") and not v.MobProperties.Busy:FindFirstChild("Before") and v.HealthProperties.Health.Value > 0 then
@@ -646,27 +609,28 @@ function Farm()
         end
     end)
 
+    stuff()
+
     spawn(function()
-        while game:GetService("RunService").Heartbeat:wait() do
+        while wait() do
             local mob = getmob()
             local boss = getboss()
             local obj = getobject()
             if obj then
                 repeat game:GetService("RunService").Heartbeat:wait()
-                    if not obj:FindFirstChild("HealthProperties") or obj.PrimaryPart == nil or obj.HealthProperties.Health.Value <= 0 then break end
+                    if not obj:FindFirstChild("HealthProperties") or obj.PrimaryPart == nil then break end
                     Update()
                     Collider.CFrame = obj.PrimaryPart.CFrame + Vector3.new(0,-20,0)
                 until obj.HealthProperties.Health.Value <= 0 
             elseif not obj and mob then
-                local oldPosMob = (mob:FindFirstChild("Collider") and mob.Collider.Position.Y)
                 repeat game:GetService("RunService").Heartbeat:wait()
-                    if keyChestOpened() or not mob:FindFirstChild("HealthProperties") or not mob:FindFirstChild("Collider") or mob.Collider.Position.Y < oldPosMob or mob.HealthProperties.Health.Value <= 0 then break end
+                    if keyChestOpened() or not mob:FindFirstChild("HealthProperties") or not mob:FindFirstChild("Collider") then break end
                     Update()
                     Collider.CFrame = mob.Collider.CFrame + Vector3.new(0,10,0)
                 until mob.HealthProperties.Health.Value <= 0
             elseif not (obj and mob) and boss then
                 repeat game:GetService("RunService").Heartbeat:wait()
-                    if changeTarget() or not boss.Parent or not boss:FindFirstChild("Collider") or (oldPosBoss ~= nil and boss.Collider.Position.Y < oldPosBoss) or not boss:FindFirstChild("HealthProperties") or not boss:FindFirstChild("MobProperties") or not boss:FindFirstChild("FromSpawnPart") or boss:FindFirstChild("NoHealthbar") or boss.HealthProperties.Health.Value <= 0 then break end
+                    if changeTarget() or not boss.Parent or not boss:FindFirstChild("Collider") or (oldPosBoss ~= nil and boss.Collider.Position.Y < oldPosBoss) or not boss:FindFirstChild("HealthProperties") or not boss:FindFirstChild("MobProperties") or not boss:FindFirstChild("FromSpawnPart") or boss:FindFirstChild("NoHealthbar") then break end
                     Update()
                     Collider.CFrame = boss.Collider.CFrame + Vector3.new(0,10,0)
                     boss.Collider.CanCollide = false
