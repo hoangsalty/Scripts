@@ -108,7 +108,6 @@ local function createOptionHolder(holderTitle, parent, parentTable, subHolder)
 	})
 	
 	local close = library:Create("ImageLabel", {
-        Name = "CloseArrow",
 		AnchorPoint = Vector2.new(0.5, 0.5),
 		Position = UDim2.new(0.5, 0, 0.5, 0),
 		Size = UDim2.new(1, -size - 10, 1, -size - 10),
