@@ -62,13 +62,13 @@ local function createOptionHolder(holderTitle, parent, parentTable, subHolder)
 	parentTable.main = library:Create("ImageButton", {
 		LayoutOrder = subHolder and parentTable.position or 0,
 		Position = UDim2.new(0, 20 + (250 * (parentTable.position or 0)), 0, 20),
-		Size = UDim2.new(0, 220, 0, size),
+		Size = UDim2.new(0, 230, 0, size),
 		BackgroundTransparency = 1,
 		Image = "rbxassetid://3570695787",
 		ImageColor3 = Color3.fromRGB(20, 20, 20),
 		ScaleType = Enum.ScaleType.Slice,
 		SliceCenter = Rect.new(100, 100, 100, 100),
-		SliceScale = 0.1,
+		SliceScale = 0.04,
 		ClipsDescendants = true,
 		Parent = parent
 	})
@@ -78,12 +78,12 @@ local function createOptionHolder(holderTitle, parent, parentTable, subHolder)
 		round = library:Create("ImageLabel", {
 			Size = UDim2.new(1, 0, 0, size),
 			BackgroundTransparency = 1,
+			Image = "rbxassetid://3570695787",
 			ImageColor3 = parentTable.open and (subHolder and Color3.fromRGB(16, 16, 16) or Color3.fromRGB(10, 10, 10)) or (subHolder and Color3.fromRGB(10, 10, 10) or Color3.fromRGB(6, 6, 6)),
-			SliceScale = 0.1,
-            Parent = parentTable.main,
-            Image = "http://www.roblox.com/asset/?id=5554237731",
-            ScaleType = Enum.ScaleType.Slice,
-            SliceCenter = Rect.new(3,3,297,297),
+			ScaleType = Enum.ScaleType.Slice,
+			SliceCenter = Rect.new(100, 100, 100, 100),
+			SliceScale = 0.04,
+			Parent = parentTable.main
 		})
 	end
 	
@@ -93,7 +93,7 @@ local function createOptionHolder(holderTitle, parent, parentTable, subHolder)
 		BackgroundColor3 = Color3.fromRGB(10, 10, 10),
 		BorderSizePixel = 0,
 		Text = holderTitle,
-        TextSize = subHolder and 15 or 16,
+		TextSize = subHolder and 16 or 17,
 		Font = Enum.Font.GothamBold,
 		TextColor3 = Color3.fromRGB(255, 255, 255),
 		Parent = parentTable.main
@@ -114,7 +114,7 @@ local function createOptionHolder(holderTitle, parent, parentTable, subHolder)
 		Rotation = parentTable.open and 90 or 180,
 		BackgroundTransparency = 1,
 		Image = "rbxassetid://4918373417",
-		ImageColor3 = parentTable.open and Color3.fromRGB(255,255,255),
+		ImageColor3 = parentTable.open and Color3.fromRGB(50, 50, 50) or Color3.fromRGB(30, 30, 30),
 		ScaleType = Enum.ScaleType.Fit,
 		Parent = closeHolder
 	})
@@ -133,7 +133,7 @@ local function createOptionHolder(holderTitle, parent, parentTable, subHolder)
 	
 	layout.Changed:connect(function()
 		parentTable.content.Size = UDim2.new(1, 0, 0, layout.AbsoluteContentSize.Y)
-		parentTable.main.Size = #parentTable.options > 0 and parentTable.open and UDim2.new(0, 220, 0, layout.AbsoluteContentSize.Y + size) or UDim2.new(0, 220, 0, size)
+		parentTable.main.Size = #parentTable.options > 0 and parentTable.open and UDim2.new(0, 230, 0, layout.AbsoluteContentSize.Y + size) or UDim2.new(0, 230, 0, size)
 	end)
 	
 	if not subHolder then
@@ -164,13 +164,13 @@ local function createOptionHolder(holderTitle, parent, parentTable, subHolder)
 	closeHolder.InputBegan:connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 then
 			parentTable.open = not parentTable.open
-			tweenService:Create(close, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Rotation = parentTable.open and 90 or 180, ImageColor3 = parentTable.open and Color3.fromRGB(255, 255, 255)}):Play()
+			tweenService:Create(close, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Rotation = parentTable.open and 90 or 180, ImageColor3 = parentTable.open and Color3.fromRGB(50, 50, 50) or Color3.fromRGB(30, 30, 30)}):Play()
 			if subHolder then
 				tweenService:Create(title, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = parentTable.open and Color3.fromRGB(16, 16, 16) or Color3.fromRGB(10, 10, 10)}):Play()
 			else
 				tweenService:Create(round, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {ImageColor3 = parentTable.open and Color3.fromRGB(10, 10, 10) or Color3.fromRGB(6, 6, 6)}):Play()
 			end
-			parentTable.main:TweenSize(#parentTable.options > 0 and parentTable.open and UDim2.new(0, 220, 0, layout.AbsoluteContentSize.Y + size) or UDim2.new(0, 220, 0, size), "Out", "Quad", 0.2, true)
+			parentTable.main:TweenSize(#parentTable.options > 0 and parentTable.open and UDim2.new(0, 230, 0, layout.AbsoluteContentSize.Y + size) or UDim2.new(0, 230, 0, size), "Out", "Quad", 0.2, true)
 		end
 	end)
 
