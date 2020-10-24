@@ -62,13 +62,13 @@ local function createOptionHolder(holderTitle, parent, parentTable, subHolder)
 	parentTable.main = library:Create("ImageButton", {
 		LayoutOrder = subHolder and parentTable.position or 0,
 		Position = UDim2.new(0, 20 + (250 * (parentTable.position or 0)), 0, 20),
-		Size = UDim2.new(0, 230, 0, size),
+		Size = UDim2.new(0, 220, 0, size),
 		BackgroundTransparency = 1,
 		Image = "rbxassetid://3570695787",
 		ImageColor3 = Color3.fromRGB(20, 20, 20),
 		ScaleType = Enum.ScaleType.Slice,
 		SliceCenter = Rect.new(100, 100, 100, 100),
-		SliceScale = 0.04,
+		SliceScale = 0.1,
 		ClipsDescendants = true,
 		Parent = parent
 	})
@@ -78,12 +78,12 @@ local function createOptionHolder(holderTitle, parent, parentTable, subHolder)
 		round = library:Create("ImageLabel", {
 			Size = UDim2.new(1, 0, 0, size),
 			BackgroundTransparency = 1,
-			Image = "rbxassetid://3570695787",
 			ImageColor3 = parentTable.open and (subHolder and Color3.fromRGB(16, 16, 16) or Color3.fromRGB(10, 10, 10)) or (subHolder and Color3.fromRGB(10, 10, 10) or Color3.fromRGB(6, 6, 6)),
-			ScaleType = Enum.ScaleType.Slice,
-			SliceCenter = Rect.new(100, 100, 100, 100),
-			SliceScale = 0.04,
-			Parent = parentTable.main
+			SliceScale = 0.1,
+            Parent = parentTable.main,
+            Image = "http://www.roblox.com/asset/?id=5554237731",
+            ScaleType = Enum.ScaleType.Slice,
+            SliceCenter = Rect.new(3,3,297,297),
 		})
 	end
 	
@@ -93,7 +93,7 @@ local function createOptionHolder(holderTitle, parent, parentTable, subHolder)
 		BackgroundColor3 = Color3.fromRGB(10, 10, 10),
 		BorderSizePixel = 0,
 		Text = holderTitle,
-		TextSize = subHolder and 16 or 17,
+        TextSize = subHolder and 15 or 16,
 		Font = Enum.Font.GothamBold,
 		TextColor3 = Color3.fromRGB(255, 255, 255),
 		Parent = parentTable.main
@@ -133,7 +133,7 @@ local function createOptionHolder(holderTitle, parent, parentTable, subHolder)
 	
 	layout.Changed:connect(function()
 		parentTable.content.Size = UDim2.new(1, 0, 0, layout.AbsoluteContentSize.Y)
-		parentTable.main.Size = #parentTable.options > 0 and parentTable.open and UDim2.new(0, 230, 0, layout.AbsoluteContentSize.Y + size) or UDim2.new(0, 230, 0, size)
+		parentTable.main.Size = #parentTable.options > 0 and parentTable.open and UDim2.new(0, 220, 0, layout.AbsoluteContentSize.Y + size) or UDim2.new(0, 220, 0, size)
 	end)
 	
 	if not subHolder then
@@ -170,7 +170,7 @@ local function createOptionHolder(holderTitle, parent, parentTable, subHolder)
 			else
 				tweenService:Create(round, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {ImageColor3 = parentTable.open and Color3.fromRGB(10, 10, 10) or Color3.fromRGB(6, 6, 6)}):Play()
 			end
-			parentTable.main:TweenSize(#parentTable.options > 0 and parentTable.open and UDim2.new(0, 230, 0, layout.AbsoluteContentSize.Y + size) or UDim2.new(0, 230, 0, size), "Out", "Quad", 0.2, true)
+			parentTable.main:TweenSize(#parentTable.options > 0 and parentTable.open and UDim2.new(0, 220, 0, layout.AbsoluteContentSize.Y + size) or UDim2.new(0, 220, 0, size), "Out", "Quad", 0.2, true)
 		end
 	end)
 
@@ -685,7 +685,7 @@ local function createList(option, parent, holder)
 		Text = option.value,
 		TextSize = 13,
 		Font = Enum.Font.GothamBold,
-		TextColor3 = Color3.fromRGB(140, 140, 140),
+		TextColor3 = Color3.fromRGB(255, 255, 255),
 		TextXAlignment = Enum.TextXAlignment.Left,
 		Parent = main
 	})
@@ -740,13 +740,14 @@ local function createList(option, parent, holder)
 		option.mainHolder.Size = UDim2.new(0, 180, 0, (valueCount > 4 and (4 * 40) or layout.AbsoluteContentSize.Y) + 12)
 		content.CanvasSize = UDim2.new(0, 0, 0, layout.AbsoluteContentSize.Y + 12)
 	end)
-    
+    	
+	library.activePopup = nil
 	local inContact
 	round.InputBegan:connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 then
             if library.activePopup then
                 option.open = false
-                tweenService:Create(closeHolder, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Rotation = option.open == false and 90, ImageColor3 = option.open == false and Color3.fromRGB(30, 30, 30)}):Play()
+                tweenService:Create(closeHolder, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Rotation = option.open == false and 90, ImageColor3 = option.open == false and Color3.fromRGB(255, 255, 255)}):Play()
                 library.activePopup:Close()
             else
                 local position = main.AbsolutePosition
@@ -755,7 +756,7 @@ local function createList(option, parent, holder)
                 option.mainHolder.Visible = true
                 library.activePopup = option
                 content.ScrollBarThickness = 6
-                tweenService:Create(closeHolder, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Rotation = option.open == true and 45, ImageColor3 = option.open == true and Color3.fromRGB(140, 140, 140)}):Play()
+                tweenService:Create(closeHolder, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Rotation = option.open == true and 45, ImageColor3 = option.open == true and Color3.fromRGB(255, 255, 255)}):Play()
                 tweenService:Create(option.mainHolder, TweenInfo.new(0.3, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {ImageTransparency = 0, Position = UDim2.new(0, position.X + 222, 0, position.Y - 4)}):Play()
                 tweenService:Create(option.mainHolder, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out, 0, false, 0.1), {Position = UDim2.new(0, position.X + 222, 0, position.Y + 1)}):Play()
                 for _,label in next, content:GetChildren() do
@@ -793,7 +794,7 @@ local function createList(option, parent, holder)
 			TextSize = 13,
 			TextTransparency = self.open and 0 or 1,
 			Font = Enum.Font.Gotham,
-			TextColor3 = Color3.fromRGB(140, 140, 140),
+			TextColor3 = Color3.fromRGB(255, 255, 255),
 			TextXAlignment = Enum.TextXAlignment.Left,
 			Parent = content
 		})
@@ -862,7 +863,7 @@ local function createList(option, parent, holder)
 		self.open = false
 		content.ScrollBarThickness = 0
         local position = main.AbsolutePosition
-        tweenService:Create(closeHolder, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Rotation = self.open == false and 90, ImageColor3 = self.open == false and Color3.fromRGB(30, 30, 30)}):Play()
+        tweenService:Create(closeHolder, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Rotation = self.open == false and 90, ImageColor3 = self.open == false and Color3.fromRGB(255, 255, 255)}):Play()
 		tweenService:Create(round, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {ImageColor3 = inContact and Color3.fromRGB(60, 60, 60) or Color3.fromRGB(40, 40, 40)}):Play()
 		tweenService:Create(self.mainHolder, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {ImageTransparency = 1, Position = UDim2.new(0, position.X - 5, 0, position.Y -10)}):Play()
 		for _,label in next, content:GetChildren() do
@@ -1623,7 +1624,8 @@ function library:Init()
 		AnchorPoint = Vector2.new(0, 0),
 		Size = UDim2.new(0, 5, 0, 5),
 		BackgroundColor3 = Color3.fromRGB(255, 255, 255),
-		Parent = self.base
+		Parent = self.base,
+		Visible = false,
 	})
 	
 	for _, window in next, self.windows do
