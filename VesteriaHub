@@ -69,9 +69,11 @@ window:Toggle("Open Chest Aura", "...", NewSettings.chestaura, function()
 end)
 window:Toggle("Pick Up", "...", NewSettings.pickup, function()
     NewSettings.pickup = not NewSettings.pickup
+    Save()
 end)
 window:Toggle("Auto Sell", "...", NewSettings.autosell, function()
     NewSettings.autosell = not NewSettings.autosell
+    Save()
 end)
 local setupSpeed = 50
 window:Slider("Fly Speed", "...", 50, 150, 50, function(value)
