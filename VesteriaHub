@@ -265,7 +265,7 @@ function lowPlayerServer()
     print(lowest)
     game.ReplicatedStorage.modules.network["playerRequest_teleportToJobId"]:InvokeServer(ID)
 end
-window:Toggle("To Low Players Server", "...", false, function()
+window:Button("To Low Players Server", "...", function()
     lowPlayerServer()
 end)
 
