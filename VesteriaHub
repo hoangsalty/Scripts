@@ -455,7 +455,7 @@ function PlayerNearby(Position)
             end
         end
     end
-    return (ClosestMagnitude <= 50)
+    return (ClosestMagnitude <= 40)
 end
 
 function NearPortal(Position)
@@ -468,7 +468,7 @@ function NearPortal(Position)
             end
         end
     end
-    return (ClosestMagnitude <= 100)
+    return (ClosestMagnitude <= 30)
 end
 
 function getMob()
@@ -513,7 +513,7 @@ end
 
 function moveto(target)
     Update()
-    if not Character:FindFirstChild("TPBypassed") and autofarm then
+    if not Character:FindFirstChild("TPBypassed") and NewSettings.autofarm then
         a = Instance.new("Part")
         a.Parent = Character
         a.CanCollide = false
@@ -526,7 +526,7 @@ function moveto(target)
         BP = Instance.new("BodyPosition")
         BP.Parent = a
         BP.MaxForce = Vector3.new(math.huge,math.huge,math.huge)
-    elseif Character:FindFirstChild("TPBypassed") and autofarm then
+    elseif Character:FindFirstChild("TPBypassed") and NewSettings.autofarm then
         if (Hitbox.Position - target.Position).magnitude > 100 then
             BP.P = 1000
             BP.D = 500
