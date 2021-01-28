@@ -537,11 +537,7 @@ function moveto(target)
             BP.D = 100
         end
         Hitbox.CanCollide = false
-        if target == getBoss() then
-            BP.Position = target.Position + Vector3.new(0,1,0)
-        else
-            BP.Position = target.Position + Vector3.new(0,-7,0)
-        end
+        BP.Position = target.Position + Vector3.new(0,-7,0)
     end
 end
 
