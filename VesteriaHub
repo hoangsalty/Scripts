@@ -1,3 +1,52 @@
+getgenv().Mobs = {
+    "Elder Shroom","Poisoned Shroom",
+    "Scarecrow",
+    "Spider","Spiderling",
+    "Guardian",
+    "Moglo","Mogloko",
+    "Bandit Skirmisher",
+    "Pit Ratty",--"Big Slime",
+    "Gorgog Guardian",
+    "Deathsting",
+    "Crabby",
+}
+
+getgenv().Bosses = {
+    "Chad",
+    "The Yeti",
+    "Spider Queen",
+    "Terror of the Deep",
+    "Mo Ko Tu Aa",
+    "Auktufiti the Watcher",
+}
+
+getgenv().DontSellItems = {
+    "Skill Reset Tome",
+    "Reset Scroll",
+    "Holy Scroll",
+    "Cursed Weapon ATK Scroll (60%)",
+    "Cursed Armor DEF Scroll (60%)",
+    "Ancient Weapon ATK Scroll (10%)",
+    "Ancient Weapon INT Scroll (10%)",
+    "Ancient Weapon DEX Scroll (10%)",
+    "Ancient Weapon STR Scroll (10%)",
+    "Ancient Weapon VIT Scroll (10%)",
+    "Royal Spider Egg",
+    "Golden Mushroom",
+    "Hunter Rune",
+    "Warrior Rune",
+    "Mage Rune",
+    "Nilgarf Rune",
+}
+
+getgenv().SellGears = {
+    "Wood", "Stick",
+    "Rusty",
+    "Oak",
+    "Willow Staff",
+    "Leather Tunic",
+}
+
 while not game:IsLoaded() do wait() end
 function WaitForChild(Parent, ChildName)
     if Parent:FindFirstChild(ChildName) then
@@ -31,10 +80,12 @@ end
 local Name = "Vesteria_Settings.lua"
 local DefaultSettings = {
 autofarm = false,
+avoidplayers = false,
 killaura = false,
 chestaura = false,
 pickup = false,
 autosell = false,
+diffserver = false,
 }
 
 if not pcall(function() readfile(Name) end) then writefile(Name, game:GetService("HttpService"):JSONEncode(DefaultSettings)) end
@@ -48,7 +99,7 @@ local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/hoang
 local window = library:Create("Vesteria", UDim2.new(0, 300, 0, 400))
 
 window:Divider("Features")
-window:Toggle("Auto Farm", "...", NewSettings.autofarm, function()
+window:Toggle("Auto Farm", "", NewSettings.autofarm, function()
     NewSettings.autofarm = not NewSettings.autofarm
     Save()
     if not autofarm then
@@ -60,26 +111,38 @@ window:Toggle("Auto Farm", "...", NewSettings.autofarm, function()
         end
     end
 end)
-window:Toggle("Kill Aura", "...", NewSettings.killaura, function()
+window:Toggle("Rejoin Diff Server", "For people get lagged (every 2mins)", NewSettings.diffserver, function()
+    NewSettings.diffserver = not NewSettings.diffserver
+    Save()
+end)
+window:Toggle("Avoid Players", "Avoid players while farming", NewSettings.avoidplayers, function()
+    NewSettings.avoidplayers = not NewSettings.avoidplayers
+    Save()
+end)
+local avoidDistance = 20
+window:Slider("Avoid Distance", "", 20, 50, 20, function(val)
+    avoidDistance = val
+end)
+window:Toggle("Kill Aura", "", NewSettings.killaura, function()
     NewSettings.killaura = not NewSettings.killaura
     Save()
 end)
-window:Toggle("Open Chest Aura", "...", NewSettings.chestaura, function()
+window:Toggle("Open Chest Aura", "", NewSettings.chestaura, function()
     NewSettings.chestaura = not NewSettings.chestaura
 end)
-window:Toggle("Pick Up", "...", NewSettings.pickup, function()
+window:Toggle("Pick Up", "", NewSettings.pickup, function()
     NewSettings.pickup = not NewSettings.pickup
     Save()
 end)
-window:Toggle("Auto Sell", "...", NewSettings.autosell, function()
+window:Toggle("Auto Sell", "", NewSettings.autosell, function()
     NewSettings.autosell = not NewSettings.autosell
     Save()
 end)
 local setupSpeed = 50
-window:Slider("Fly Speed", "...", 50, 150, 50, function(value)
+window:Slider("Fly Speed", "", 50, 150, 50, function(value)
     setupSpeed = value
 end)
-window:Toggle("Fly", "...", false, function()
+window:Toggle("Fly", "", false, function()
     fly = not fly
     function setup()
         Update()
@@ -170,7 +233,7 @@ function CreateEsp(part, name, color)
         end)
     end)
 end
-window:Toggle("Chests ESP", "...", false, function()
+window:Toggle("Chests ESP", "", false, function()
     chests = not chests
     for i,v in next, workspace:GetChildren() do
         if v:IsA("Model") and v.Name:find("Chest") and v:FindFirstChild("RootPart") and v:FindFirstChildWhichIsA("Model") then
@@ -205,7 +268,7 @@ window:Toggle("Chests ESP", "...", false, function()
         end
     end
 end)
-window:Toggle("Gates ESP", "...", false, function()
+window:Toggle("Gates ESP", "", false, function()
     gates = not gates
     for i,v in next, workspace:GetChildren() do
         if v:FindFirstChild("teleportDestination") then
@@ -267,7 +330,7 @@ function lowPlayerServer()
     print(lowest)
     game.ReplicatedStorage.modules.network["playerRequest_teleportToJobId"]:InvokeServer(ID)
 end
-window:Button("To Low Players Server", "...", function()
+window:Button("To Low Players Server", "", function()
     lowPlayerServer()
 end)
 
@@ -334,39 +397,12 @@ coroutine.wrap(function()
 end)()
 
 ---Sell
-local DontSellItems = {
-    "Skill Reset Tome",
-    "Reset Scroll",
-    "Holy Scroll",
-    "Cursed Weapon ATK Scroll (60%)",
-    "Cursed Armor DEF Scroll (60%)",
-    "Ancient Weapon ATK Scroll (10%)",
-    "Ancient Weapon INT Scroll (10%)",
-    "Ancient Weapon DEX Scroll (10%)",
-    "Ancient Weapon STR Scroll (10%)",
-    "Ancient Weapon VIT Scroll (10%)",
-    "Royal Spider Egg",
-    "Golden Mushroom",
-    "Hunter Rune",
-    "Warrior Rune",
-    "Mage Rune",
-    "Nilgarf Rune",
-}
-
-local SellGears = {
-    "Wood", "Stick",
-    "Rusty",
-    "Oak",
-    "Willow Staff",
-    "Leather Tunic",
-}
-
 function isInData(ID)
     for c,d in next, require(game.ReplicatedStorage.itemData) do
-        if (d.category == "consumable" or d.category == "miscellaneous") and d.id == ID and not table.find(DontSellItems, d.name) then
+        if (d.category == "consumable" or d.category == "miscellaneous") and d.id == ID and not table.find(getgenv().DontSellItems, d.name) then
             return true
         elseif d.category == "equipment" and d.id == ID then
-            for k,j in next, SellGears do
+            for k,j in next, getgenv().SellGears do
                 if d.name:find(j) then
                     return true
                 end
@@ -425,39 +461,17 @@ spawn(function()
 end)
 
 --Auto Farm
-local Mobs = {
-    "Elder Shroom","Poisoned Shroom",
-    "Scarecrow",
-    "Spider","Spiderling",
-    "Guardian",
-    "Moglo","Mogloko",
-    "Bandit Skirmisher",
-    "Pit Ratty",--"Big Slime",
-    "Gorgog Guardian",
-    "Deathsting",
-    "Crabby",
-}
-
-local Bosses = {
-    "Chad",
-    "The Yeti",
-    "Spider Queen",
-    "Terror of the Deep",
-    "Mo Ko Tu Aa",
-    "Auktufiti the Watcher",
-}
-
 function PlayerNearby(Position)
     local ClosestMagnitude = math.huge
     for i,v in next, game.Players:GetPlayers() do
         if v.Name ~= Player.Name and v.Character and v.Character:FindFirstChild("hitbox") then
             local Magnitude = (Position - v.Character.hitbox.Position).magnitude
-            if Magnitude < ClosestMagnitude then
+            if Magnitude < ClosestMagnitude and NewSettings.avoidplayers then
                 ClosestMagnitude = Magnitude
             end
         end
     end
-    return (ClosestMagnitude <= 40)
+    return (ClosestMagnitude <= avoidDistance)
 end
 
 function NearPortal(Position)
@@ -465,7 +479,7 @@ function NearPortal(Position)
     for i,v in next, workspace:GetChildren() do
         if v:IsA("Part") and v:FindFirstChild("teleportDestination") then
             local Magnitude = (Position - v.Position).magnitude
-            if Magnitude < ClosestMagnitude then
+            if Magnitude < ClosestMagnitude and not PlayerNearby(v.Position) then
                 ClosestMagnitude = Magnitude
             end
         end
@@ -491,7 +505,7 @@ end
 
 function getBoss()
     for i,v in next, workspace.placeFolders.entityManifestCollection:GetChildren() do 
-        if (table.find(Bosses, v.Name) or v:FindFirstChild("specialName") or v:FindFirstChild("giantEnemySmoke")) and v:FindFirstChild("health") and v.health.Value > 0 then
+        if (table.find(getgenv().Bosses, v.Name) or v:FindFirstChild("specialName") or v:FindFirstChild("giantEnemySmoke")) and v:FindFirstChild("health") and v.health.Value > 0 then
             return v
         end
     end
@@ -552,6 +566,26 @@ function avoidClowns()
 end
 
 spawn(function()
+    while wait(1200) do
+        if NewSettings.diffserver then
+            avoidClowns()
+        end
+    end
+end)
+
+spawn(function()
+    local clowns = {35320019,67237163,116511190,47182827,124071718,80232750}
+    while game:GetService("RunService").Heartbeat:wait() do
+        local stupidTable = game.HttpService:JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/"..game.PlaceId.."/servers/Public?sortOrder=Asc&limit=100"))
+        for i,v in next, stupidTable.data do
+            if v.playing >= 10 then
+                lowPlayerServer()
+            end
+        end
+    end
+end)
+
+spawn(function()
     local clowns = {35320019,67237163,116511190,47182827,124071718,80232750}
     while game:GetService("RunService").Heartbeat:wait() do
         for i,v in next, game.Players:GetPlayers() do
@@ -581,7 +615,7 @@ spawn(function()
                 until boss.health.Value <= 0 or not NewSettings.autofarm
             elseif not (item and boss) and mob then
                 repeat wait()
-                    if getBoss() or getItem() or NearPortal(mob.Position) or not mob:FindFirstChild("health") or mob.health.Value <= 0 then break end
+                    if getBoss() or getItem() or NearPortal(mob.Position) or (PlayerNearby(mob.Position) and NewSettings.avoidplayers) or not mob:FindFirstChild("health") or mob.health.Value <= 0 then break end
                     moveto(mob)
                 until mob.health.Value <= 0 or not NewSettings.autofarm
             end
