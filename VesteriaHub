@@ -528,7 +528,7 @@ function getItem()
     return nearest
 end
 
-function moveto(target)
+function moveto(target, yvector)
     Update()
     if not Character:FindFirstChild("TPBypassed") and NewSettings.autofarm then
         a = Instance.new("Part")
@@ -552,7 +552,7 @@ function moveto(target)
             BP.D = 100
         end
         Hitbox.CanCollide = false
-        BP.Position = target.Position + Vector3.new(0,-7,0)
+        BP.Position = target.Position + Vector3.new(0,yvector,0)
     end
 end
 
@@ -579,7 +579,7 @@ spawn(function()
     while game:GetService("RunService").Heartbeat:wait() do
         local stupidTable = game.HttpService:JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/"..game.PlaceId.."/servers/Public?sortOrder=Asc&limit=100"))
         for i,v in next, stupidTable.data do
-            if v.playing >= 20 then
+            if v.playing >= 15 then
                 lowPlayerServer()
             end
         end
@@ -607,17 +607,25 @@ spawn(function()
                 repeat game:GetService("RunService").Heartbeat:wait()
                     if not item:FindFirstChild("HumanoidRootPart") or not item:FindFirstChild("owners") or not item.owners:FindFirstChild(Player.UserId) then break end
                     Update()
-                    moveto(item)
+                    moveto(item, -7)
                 until not item:FindFirstChild("HumanoidRootPart") or not item.owners:FindFirstChild(Player.UserId)
             elseif not item and boss then
                 repeat wait()
                     if getItem() or not boss:FindFirstChild("health") or boss.health.Value <= 0 then break end
-                    moveto(boss)
+                    if boss.Name:lower():find("slime") then
+                        moveto(boss, 1)
+                    else
+                        moveto(boss, -7)
+                    end
                 until boss.health.Value <= 0 or not NewSettings.autofarm
             elseif not (item and boss) and mob then
                 repeat wait()
                     if getBoss() or getItem() or NearPortal(mob.Position) or (PlayerNearby(mob.Position) and NewSettings.avoidplayers) or not mob:FindFirstChild("health") or mob.health.Value <= 0 then break end
-                    moveto(mob)
+                    if mob.Name:lower():find("slime") then
+                        moveto(mob, 1)
+                    else
+                        moveto(boss, -7)
+                    end
                 until mob.health.Value <= 0 or not NewSettings.autofarm
             end
         end
