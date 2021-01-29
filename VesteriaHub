@@ -574,14 +574,20 @@ spawn(function()
     end
 end)
 
+local currentPlrAmount()
+    local count = 0
+    for i,v in next, game.Players:GetPlayers() do
+        if v.UserId ~= nil then
+            count = count + 1
+        end
+    end
+    return count
+end
+
 spawn(function()
-    local clowns = {35320019,67237163,116511190,47182827,124071718,80232750}
     while game:GetService("RunService").Heartbeat:wait() do
-        local stupidTable = game.HttpService:JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/"..game.PlaceId.."/servers/Public?sortOrder=Asc&limit=100"))
-        for i,v in next, stupidTable.data do
-            if v.playing >= 15 then
-                lowPlayerServer()
-            end
+        if currentPlrAmount() >= 15 then
+            lowPlayerServer()
         end
     end
 end)
