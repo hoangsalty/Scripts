@@ -472,7 +472,7 @@ function PlayerNearby(Position)
             end
         end
     end
-    return (ClosestMagnitude <= NewSettings.avoidDistance)
+    return (ClosestMagnitude <= (NewSettings.avoidDistance or 20))
 end
 
 function NearPortal(Position)
@@ -624,7 +624,7 @@ spawn(function()
                     if mob.Name:lower():find("slime") then
                         moveto(mob, 1)
                     else
-                        moveto(boss, -7)
+                        moveto(mob, -7)
                     end
                 until mob.health.Value <= 0 or not NewSettings.autofarm
             end
