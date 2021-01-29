@@ -574,7 +574,7 @@ spawn(function()
     end
 end)
 
-local currentPlrAmount()
+function currentPlrAmount()
     local count = 0
     for i,v in next, game.Players:GetPlayers() do
         if v.UserId ~= nil then
