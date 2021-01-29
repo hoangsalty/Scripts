@@ -86,6 +86,7 @@ chestaura = false,
 pickup = false,
 autosell = false,
 diffserver = false,
+avoidDistance = 20,
 }
 
 if not pcall(function() readfile(Name) end) then writefile(Name, game:GetService("HttpService"):JSONEncode(DefaultSettings)) end
@@ -119,9 +120,9 @@ window:Toggle("Avoid Players", "Avoid players while farming", NewSettings.avoidp
     NewSettings.avoidplayers = not NewSettings.avoidplayers
     Save()
 end)
-local avoidDistance = 20
-window:Slider("Avoid Distance", "", 20, 50, 20, function(val)
-    avoidDistance = val
+window:Slider("Avoid Distance", "", 20, 50, NewSettings.avoidDistance, function(val)
+    NewSettings.avoidDistance = val
+    Save()
 end)
 window:Toggle("Kill Aura", "", NewSettings.killaura, function()
     NewSettings.killaura = not NewSettings.killaura
@@ -471,7 +472,7 @@ function PlayerNearby(Position)
             end
         end
     end
-    return (ClosestMagnitude <= avoidDistance)
+    return (ClosestMagnitude <= NewSettings.avoidDistance)
 end
 
 function NearPortal(Position)
@@ -484,11 +485,11 @@ function NearPortal(Position)
             end
         end
     end
-    return (ClosestMagnitude <= 30)
+    return (ClosestMagnitude <= 20)
 end
 
 function getMob()
-    local nearest
+    local nearest = nil
     local maxDist = math.huge
     for i,v in next, workspace.placeFolders.entityManifestCollection:GetChildren() do 
         if v:IsA("Part") and table.find(Mobs, v.Name) and v:FindFirstChild("health") and v.health.Value > 0 then
@@ -578,7 +579,7 @@ spawn(function()
     while game:GetService("RunService").Heartbeat:wait() do
         local stupidTable = game.HttpService:JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/"..game.PlaceId.."/servers/Public?sortOrder=Asc&limit=100"))
         for i,v in next, stupidTable.data do
-            if v.playing >= 10 then
+            if v.playing >= 20 then
                 lowPlayerServer()
             end
         end
