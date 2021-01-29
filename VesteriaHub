@@ -615,7 +615,7 @@ spawn(function()
                     if boss.Name:lower():find("slime") then
                         moveto(boss, 1)
                     else
-                        moveto(boss, -7)
+                        moveto(boss, -15)
                     end
                 until boss.health.Value <= 0 or not NewSettings.autofarm
             elseif not (item and boss) and mob then
@@ -624,7 +624,7 @@ spawn(function()
                     if mob.Name:lower():find("slime") then
                         moveto(mob, 1)
                     else
-                        moveto(mob, -7)
+                        moveto(mob, -8)
                     end
                 until mob.health.Value <= 0 or not NewSettings.autofarm
             end
