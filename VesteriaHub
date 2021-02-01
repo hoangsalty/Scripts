@@ -96,14 +96,14 @@ function Save()
 end
 
 ---GUI
-local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/hoangsalty/Scripts/master/Abstract%20UI%20Lib.lua"))()
-local window = library:Create("Vesteria", UDim2.new(0, 300, 0, 400))
-
-window:Divider("Features")
-window:Toggle("Auto Farm", "", NewSettings.autofarm, function()
-    NewSettings.autofarm = not NewSettings.autofarm
+local Luminosity = loadstring(game:HttpGet("https://raw.githubusercontent.com/iHavoc101/Genesis-Studios/main/UserInterface/Luminosity.lua", true))()
+local window = Luminosity.new("Vesteria", "Press LeftBracket '['", 2692648378)
+----Features
+local Features = window.Tab("Features")
+local AutoFarm = Features.Cheat("AutoFarm", "Auto Farming", function(State)
+    NewSettings.autofarm = State
     Save()
-    if not autofarm then
+    if NewSettings.autofarm == false then
         Update()
         if Character:FindFirstChild("TPBypassed") then
             Character.TPBypassed:Remove()
@@ -111,40 +111,47 @@ window:Toggle("Auto Farm", "", NewSettings.autofarm, function()
             Hitbox.CanCollide = true
         end
     end
-end)
-window:Toggle("Rejoin Diff Server", "For people get lagged (every 2mins)", NewSettings.diffserver, function()
-    NewSettings.diffserver = not NewSettings.diffserver
+end) AutoFarm.Value = NewSettings.autofarm --- Toggle Statement
+
+AutoFarm.Switch("Rejoin different server every 20 minutes", function(State)
+    NewSettings.diffserver = State
+    Save()
+end).Value = NewSettings.diffserver
+
+AutoFarm.Switch("Avoid players while farming", function(State)
+    NewSettings.avoidplayers = State
+    Save()
+end).Value = NewSettings.avoidplayers
+
+AutoFarm.Slider("Avoid distance", {Precise = true, Default = 20, Min = 20, Max = 50}, function(value)
+    NewSettings.avoidDistance = value
     Save()
 end)
-window:Toggle("Avoid Players", "Avoid players while farming", NewSettings.avoidplayers, function()
-    NewSettings.avoidplayers = not NewSettings.avoidplayers
+--Kill Aura / Open Chests
+local Auras = Features.Cheat("Kill Aura", "Using default distance", function(State)
+    NewSettings.killaura = State
     Save()
-end)
-window:Slider("Avoid Distance", "", 20, 50, NewSettings.avoidDistance, function(val)
-    NewSettings.avoidDistance = val
+end) Auras.Value = NewSettings.killaura --- Toggle Statement
+
+Auras.Switch("Open chest aura", function(State)
+    NewSettings.chestaura = State
     Save()
-end)
-window:Toggle("Kill Aura", "", NewSettings.killaura, function()
-    NewSettings.killaura = not NewSettings.killaura
+end).Value = NewSettings.chestaura
+--Pick up / Auto Sell
+local Others = Features.Folder("Other Features", "Some other features")
+Others.Switch("Pick Up", function(State)
+    NewSettings.pickup = State
     Save()
-end)
-window:Toggle("Open Chest Aura", "", NewSettings.chestaura, function()
-    NewSettings.chestaura = not NewSettings.chestaura
-end)
-window:Toggle("Pick Up", "", NewSettings.pickup, function()
-    NewSettings.pickup = not NewSettings.pickup
+end).Value = NewSettings.pickup
+
+Others.Switch("Sell", function(State)
+    NewSettings.autosell = State
     Save()
-end)
-window:Toggle("Auto Sell", "", NewSettings.autosell, function()
-    NewSettings.autosell = not NewSettings.autosell
-    Save()
-end)
-local setupSpeed = 50
-window:Slider("Fly Speed", "", 50, 150, 50, function(value)
-    setupSpeed = value
-end)
-window:Toggle("Fly", "", false, function()
-    fly = not fly
+end).Value = NewSettings.autosell
+--Fly
+local flySpeed = 50
+local Fly = Features.Cheat("Fly", "Modify", function(State)
+    fly = State
     function setup()
         Update()
         T = Instance.new("Part", Character)
@@ -161,7 +168,7 @@ window:Toggle("Fly", "", false, function()
         BG.CFrame = T.CFrame
         BV.velocity = Vector3.new(0, 0.1, 0)
         BV.maxForce = Vector3.new(9e4,9e4,9e4)
-	Hitbox.CanCollide = false
+	    Hitbox.CanCollide = false
     end
     
     local CONTROL = {F = 0, B = 0, L = 0, R = 0}
@@ -184,11 +191,11 @@ window:Toggle("Fly", "", false, function()
     end)
 
     Update()
-    if fly then
+    if fly == true then
         setup()
         repeat wait()
             if CONTROL.L + CONTROL.R ~= 0 or CONTROL.F + CONTROL.B ~= 0 then
-                SPEED = setupSpeed
+                SPEED = flySpeed
             elseif not (CONTROL.L + CONTROL.R ~= 0 or CONTROL.F + CONTROL.B ~= 0) and SPEED ~= 0 then
                 SPEED = 0
             end
@@ -201,8 +208,8 @@ window:Toggle("Fly", "", false, function()
                 BV.velocity = Vector3.new(0, 0.1, 0)
             end
             BG.CFrame = game.Workspace.CurrentCamera.CoordinateFrame
-        until not fly
-    elseif not fly and Character:FindFirstChild("Fly Part") then
+        until fly == false
+    elseif fly == false and Character:FindFirstChild("Fly Part") then
         Update()
         CONTROL = {F = 0, B = 0, L = 0, R = 0}
         lCONTROL = {F = 0, B = 0, L = 0, R = 0}
@@ -211,7 +218,12 @@ window:Toggle("Fly", "", false, function()
 	    Hitbox.CanCollide = true
     end
 end)
-window:Divider("ESP")
+
+Fly.Slider("Fly speed", {Precise = true, Default = 50, Min = 50, Max = 200}, function(value)
+    flySpeed = value
+end)
+----ESP
+local ESP = window.Tab("ESP")
 function CreateEsp(part, name, color)
     Update()
     local boxholder = Instance.new("BillboardGui", part)
@@ -234,43 +246,8 @@ function CreateEsp(part, name, color)
         end)
     end)
 end
-window:Toggle("Chests ESP", "", false, function()
-    chests = not chests
-    for i,v in next, workspace:GetChildren() do
-        if v:IsA("Model") and v.Name:find("Chest") and v:FindFirstChild("RootPart") and v:FindFirstChildWhichIsA("Model") then
-            local chestModel = v:FindFirstChildWhichIsA("Model")
-            chestModel.ChildAdded:connect(function(child)
-                if child.Name == "chestBillboard" and chests then
-                    pcall(function() v.RootPart.ESP:Remove() end)
-                end
-            end)
-            if chests and not chestModel:FindFirstChild("chestBillboard") and not v.RootPart:FindFirstChild("ESP") then
-                CreateEsp(v.RootPart, v.Name, Color3.fromRGB(245, 205, 48))
-            elseif (not chests or chestModel:FindFirstChild("chestBillboard")) and v.RootPart:FindFirstChild("ESP") then
-                v.RootPart.ESP:Remove()
-            end
-        end
-    end
-    if workspace:FindFirstChild("Chests") then
-        for i,v in next, workspace.Chests:GetChildren() do
-            if v:IsA("Model") and v.Name:find("Chest") and v:FindFirstChild("RootPart") and v:FindFirstChildWhichIsA("Model") then
-                local chestModel = v:FindFirstChildWhichIsA("Model")
-                chestModel.ChildAdded:connect(function(child)
-                    if child.Name == "chestBillboard" and chests then
-                        pcall(function() v.RootPart.ESP:Remove() end)
-                    end
-                end)
-                if chests and not chestModel:FindFirstChild("chestBillboard") and not v.RootPart:FindFirstChild("ESP") then
-                    CreateEsp(v.RootPart, v.Name, Color3.fromRGB(245, 205, 48))
-                elseif (not chests or chestModel:FindFirstChild("chestBillboard")) and v.RootPart:FindFirstChild("ESP") then
-                    v.RootPart.ESP:Remove()
-                end
-            end
-        end
-    end
-end)
-window:Toggle("Gates ESP", "", false, function()
-    gates = not gates
+local Gates = ESP.Cheat("Gates", "Gates ESP", function(State)
+    gates = State
     for i,v in next, workspace:GetChildren() do
         if v:FindFirstChild("teleportDestination") then
             local placeid = v.teleportDestination.Value
@@ -309,32 +286,54 @@ window:Toggle("Gates ESP", "", false, function()
             elseif placeid == 5986816252 then name = "Gorgog Pond"
             elseif placeid == 5995061312 then name = "Gorgog Lab"
             end
-            if gates and not v:FindFirstChild("ESP") then
+            if gates == true and not v:FindFirstChild("ESP") then
                 CreateEsp(v, name, Color3.fromRGB(255, 89, 89))
-            elseif not chests and v:FindFirstChild("ESP") then
+            elseif gates == false and v:FindFirstChild("ESP") then
                 v.ESP:Remove()
             end
         end
     end
 end)
-window:Divider("Hide Like A Bitch")
-function lowPlayerServer()
-    local lowest = math.huge
-    local ID = nil
-    local stupidTable = game.HttpService:JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/"..game.PlaceId.."/servers/Public?sortOrder=Asc&limit=100"))
-    for i,v in next, stupidTable.data do
-        if v.playing <= lowest then
-            lowest = v.playing
-            ID = v.id
+local Chests = ESP.Cheat("Chests", "Chests ESP", function(State)
+    chests = State
+    for i,v in next, workspace:GetChildren() do
+        if v:IsA("Model") and v.Name:find("Chest") and v:FindFirstChild("RootPart") and v:FindFirstChildWhichIsA("Model") then
+            local chestModel = v:FindFirstChildWhichIsA("Model")
+            chestModel.ChildAdded:connect(function(child)
+                if child.Name == "chestBillboard" and chests then
+                    pcall(function() v.RootPart.ESP:Remove() end)
+                end
+            end)
+            if chests == true and not chestModel:FindFirstChild("chestBillboard") and not v.RootPart:FindFirstChild("ESP") then
+                CreateEsp(v.RootPart, v.Name, Color3.fromRGB(245, 205, 48))
+            elseif (chests == false or chestModel:FindFirstChild("chestBillboard")) and v.RootPart:FindFirstChild("ESP") then
+                v.RootPart.ESP:Remove()
+            end
         end
     end
-    print(lowest)
-    game.ReplicatedStorage.modules.network["playerRequest_teleportToJobId"]:InvokeServer(ID)
-end
-window:Button("To Low Players Server", "", function()
-    lowPlayerServer()
+    if workspace:FindFirstChild("Chests") then
+        for i,v in next, workspace.Chests:GetChildren() do
+            if v:IsA("Model") and v.Name:find("Chest") and v:FindFirstChild("RootPart") and v:FindFirstChildWhichIsA("Model") then
+                local chestModel = v:FindFirstChildWhichIsA("Model")
+                chestModel.ChildAdded:connect(function(child)
+                    if child.Name == "chestBillboard" and chests then
+                        pcall(function() v.RootPart.ESP:Remove() end)
+                    end
+                end)
+                if chests == true and not chestModel:FindFirstChild("chestBillboard") and not v.RootPart:FindFirstChild("ESP") then
+                    CreateEsp(v.RootPart, v.Name, Color3.fromRGB(245, 205, 48))
+                elseif (chests == false or chestModel:FindFirstChild("chestBillboard")) and v.RootPart:FindFirstChild("ESP") then
+                    v.RootPart.ESP:Remove()
+                end
+            end
+        end
+    end
 end)
 
+---Credits
+local Credit = window.Tab("Credits")
+Credit.Folder("Script: edjlambo (Jank)", "")
+Credit.Folder("UI Lib: OminousVibes", "Big love for a decent looking UI Lib")
 ---No Fog
 game.Lighting.FogEnd = 1000000
 
@@ -362,7 +361,7 @@ end)
 ---Pick up
 spawn(function()
     while wait() do
-        if NewSettings.pickup then
+        if NewSettings.pickup == true then
             coroutine.resume(coroutine.create(function()
                 for i,v in next, workspace.placeFolders.items:GetChildren() do
                     if v:FindFirstChild("owners") and v.owners:FindFirstChild(Player.UserId) then
@@ -380,7 +379,7 @@ end)
 ---Kill Aura
 coroutine.wrap(function()
     while wait() do
-        if NewSettings.killaura then
+        if NewSettings.killaura == true then
             for i,v in next, workspace.placeFolders.entityManifestCollection:GetChildren() do
                 if v:IsA("Part") and v:FindFirstChild("health") and v.health.Value > 0 then
                     Update()
@@ -423,7 +422,7 @@ end
 
 spawn(function()
     while wait() do
-        if NewSettings.autosell then
+        if NewSettings.autosell == true then
             for i,v in next, Player.PlayerGui.gameUI.playerMenu.right.inventoryFrame.header.sorts:GetChildren() do
                 if v:IsA("ImageButton") then
                     for i,button in next, getconnections(v.Activated) do button:Fire() end
@@ -438,7 +437,7 @@ end)
 --Open Chest
 spawn(function()
     while wait() do
-        if NewSettings.chestaura then
+        if NewSettings.chestaura == true then
             for i,v in next, workspace:GetChildren() do
                 if v:IsA("Model") and v.Name:find("Chest") and v:FindFirstChild("RootPart") and not v:FindFirstChildWhichIsA("chestBillboard") then
                     Update()
@@ -467,12 +466,12 @@ function PlayerNearby(Position)
     for i,v in next, game.Players:GetPlayers() do
         if v.Name ~= Player.Name and v.Character and v.Character:FindFirstChild("hitbox") then
             local Magnitude = (Position - v.Character.hitbox.Position).magnitude
-            if Magnitude < ClosestMagnitude and NewSettings.avoidplayers then
+            if Magnitude < ClosestMagnitude and NewSettings.avoidplayers == true then
                 ClosestMagnitude = Magnitude
             end
         end
     end
-    return (ClosestMagnitude <= (NewSettings.avoidDistance or 20))
+    return (ClosestMagnitude <= (NewSettings.avoidDistance or math.huge))
 end
 
 function NearPortal(Position)
@@ -530,7 +529,7 @@ end
 
 function moveto(target, yvector)
     Update()
-    if not Character:FindFirstChild("TPBypassed") and NewSettings.autofarm then
+    if not Character:FindFirstChild("TPBypassed") and NewSettings.autofarm == true then
         a = Instance.new("Part")
         a.Parent = Character
         a.CanCollide = false
@@ -543,7 +542,7 @@ function moveto(target, yvector)
         BP = Instance.new("BodyPosition")
         BP.Parent = a
         BP.MaxForce = Vector3.new(math.huge,math.huge,math.huge)
-    elseif Character:FindFirstChild("TPBypassed") and NewSettings.autofarm then
+    elseif Character:FindFirstChild("TPBypassed") and NewSettings.autofarm == true then
         if (Hitbox.Position - target.Position).magnitude > 100 then
             BP.P = 1000
             BP.D = 500
@@ -584,6 +583,20 @@ function currentPlrAmount()
     return count
 end
 
+function lowPlayerServer()
+    local lowest = math.huge
+    local ID = nil
+    local stupidTable = game.HttpService:JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/"..game.PlaceId.."/servers/Public?sortOrder=Asc&limit=100"))
+    for i,v in next, stupidTable.data do
+        if v.playing <= lowest then
+            lowest = v.playing
+            ID = v.id
+        end
+    end
+    print(lowest)
+    game.ReplicatedStorage.modules.network["playerRequest_teleportToJobId"]:InvokeServer(ID)
+end
+
 spawn(function()
     while game:GetService("RunService").Heartbeat:wait() do
         if currentPlrAmount() >= 15 then
@@ -605,7 +618,7 @@ end)
 
 spawn(function()
     while wait(.1) do
-        if NewSettings.autofarm then
+        if NewSettings.autofarm == true then
             local mob = getMob()
             local item = getItem()
             local boss = getBoss()
@@ -614,7 +627,7 @@ spawn(function()
                     if not item:FindFirstChild("HumanoidRootPart") or not item:FindFirstChild("owners") or not item.owners:FindFirstChild(Player.UserId) then break end
                     Update()
                     moveto(item, -7)
-                until not item:FindFirstChild("HumanoidRootPart") or not item.owners:FindFirstChild(Player.UserId)
+                until not item:FindFirstChild("HumanoidRootPart") or not item.owners:FindFirstChild(Player.UserId) or NewSettings.autofarm == false
             elseif not item and boss then
                 repeat wait()
                     if getItem() or not boss:FindFirstChild("health") or boss.health.Value <= 0 then break end
@@ -623,7 +636,7 @@ spawn(function()
                     else
                         moveto(boss, -15)
                     end
-                until boss.health.Value <= 0 or not NewSettings.autofarm
+                until boss.health.Value <= 0 or NewSettings.autofarm == false
             elseif not (item and boss) and mob then
                 repeat wait()
                     if getBoss() or getItem() or NearPortal(mob.Position) or (PlayerNearby(mob.Position) and NewSettings.avoidplayers) or not mob:FindFirstChild("health") or mob.health.Value <= 0 then break end
@@ -632,10 +645,16 @@ spawn(function()
                     else
                         moveto(mob, -8)
                     end
-                until mob.health.Value <= 0 or not NewSettings.autofarm
+                until mob.health.Value <= 0 or NewSettings.autofarm == false
             end
         end
     end
 end)
 
-syn.queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/hoangsalty/Scripts/master/VesteriaHub"))()')
+game:GetService("UserInputService").InputBegan:Connect(function(Input)
+    if Input.KeyCode == Enum.KeyCode.LeftBracket then
+        window:Toggle()
+    end
+end)
+
+syn.queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/hoangsalty/Scripts/master/VesteriaHub", true))()')
