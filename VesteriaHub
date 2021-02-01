@@ -471,7 +471,11 @@ function PlayerNearby(Position)
             end
         end
     end
-    return (ClosestMagnitude <= (NewSettings.avoidDistance or math.huge))
+    if NewSettings.avoidplayers == true then
+        return (ClosestMagnitude <= (NewSettings.avoidDistance or 30))
+    else
+        return (ClosestMagnitude <= math.huge)
+    end
 end
 
 function NearPortal(Position)
