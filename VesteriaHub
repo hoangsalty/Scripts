@@ -547,12 +547,12 @@ function moveto(target, yvector)
         BP.Parent = a
         BP.MaxForce = Vector3.new(math.huge,math.huge,math.huge)
     elseif Character:FindFirstChild("TPBypassed") and NewSettings.autofarm == true then
-        if (Hitbox.Position - target.Position).magnitude > 100 then
+        if (Hitbox.Position - target.Position).magnitude > 50 then
             BP.P = 1000
             BP.D = 500
         else
             BP.P = 1000
-            BP.D = 100
+            BP.D = 250
         end
         Hitbox.CanCollide = false
         BP.Position = target.Position + Vector3.new(0,yvector,0)
