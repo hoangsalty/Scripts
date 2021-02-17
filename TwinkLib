@@ -688,7 +688,6 @@ function UILibrary.Load(GUITitle)
 			ToggleButton.Parent = ToggleLeftSide
 			
 			ToggleButton.MouseButton1Down:Connect(function()
-                ThisToggle = not ThisToggle
                 Tween(EffectFrame, {BackgroundColor3 = ThisToggle and Color3.fromRGB(0,255,109) or Color3.fromRGB(255,160,160)})
                 Tween(RightTick, {ImageTransparency = ThisToggle and 0 or 1})
 			end)
