@@ -645,7 +645,7 @@ function UILibrary.Load(GUITitle)
 		end
 		
 		function PageLibrary.AddToggle(Text, Default, Callback)
-			local ThisToggle = Default or false
+			local ThisToggle = Default
 			
 			local ToggleContainer = Frame()
 			ToggleContainer.Name = Text.."TOGGLE"
@@ -688,11 +688,10 @@ function UILibrary.Load(GUITitle)
 			ToggleButton.Parent = ToggleLeftSide
 			
 			ToggleButton.MouseButton1Down:Connect(function()
-				if ThisToggle == true then
-                    Tween(EffectFrame, {BackgroundColor3 = ThisToggle and Color3.fromRGB(0,255,109) or Color3.fromRGB(255,160,160)})
-                    Tween(RightTick, {ImageTransparency = ThisToggle and 0 or 1})
-                    Callback(ThisToggle)
-                end
+                ThisToggle = not ThisToggle
+                Tween(EffectFrame, {BackgroundColor3 = ThisToggle and Color3.fromRGB(0,255,109) or Color3.fromRGB(255,160,160)})
+                Tween(RightTick, {ImageTransparency = ThisToggle and 0 or 1})
+                Callback(ThisToggle)
 			end)	
 		end
 		
