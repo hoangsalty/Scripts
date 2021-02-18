@@ -451,8 +451,8 @@ function UILibrary.Load(GUITitle)
 			for OptionIndex, Option in next, DropdownArray do
 				PageLibrary.AddButton(Option, function()
 					Callback(Option)
-					DropdownLabel.Text = Text..": "..Option
-				end, DropdownFrame, OptionIndex < #DropdownArray)
+					DropdownLabel.Text = Option
+				end, DropdownFrame, OptionIndex <= #DropdownArray)
 			end
 			
 			DropdownExpander.MouseButton1Down:Connect(function()
