@@ -568,9 +568,7 @@ function UILibrary.Load(GUITitle)
 				Minimum = Maximum
 				Maximum = StoreValue
 			end
-			
-			Default = math.clamp(Default, Minimum, Maximum)
-			
+						
 			local DefaultScale = Default/Maximum
 			
 			local SliderContainer = Frame()
