@@ -783,15 +783,18 @@ Library.Create = function(_, LibraryOptions)
 							ColourToTrue:Play()
 							Frame1ToTrue:Play()
 							Frame2ToTrue:Play()
-                            ToggleOptions.Callback(true)
-                        else
+						else
 							ColourToFalse:Play()
 							Frame1ToFalse:Play()
 							Frame2ToFalse:Play()
-                            ToggleOptions.Callback(false)
 						end
+                        ToggleOptions.Callback(State)
 					end
-                    ToggleFunction(ToggleOptions.State)
+                    ToggleOptions.Callback(ToggleOptions.State)
+					Toggle.MouseButton1Click:connect(function()
+						ToggleOptions.State = not ToggleOptions.State
+						ToggleFunction(ToggleOptions.State)
+					end)
 				end
 
 				AddOptionHoverTweens(Toggle)
