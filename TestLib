@@ -1,7 +1,5 @@
 local Library = {Count = 0, Tab = nil}
-if game.CoreGui:FindFirstChild("UILibrary") then
-    game.CoreGui.UILibrary:Remove()
-end
+
 local Themes = {
 	Light = {
 		Main = Color3.fromRGB(190, 190, 190),
@@ -785,7 +783,7 @@ Library.Create = function(_, LibraryOptions)
 							ColourToTrue:Play()
 							Frame1ToTrue:Play()
 							Frame2ToTrue:Play()
-						else
+                        elseif State == false
 							ColourToFalse:Play()
 							Frame1ToFalse:Play()
 							Frame2ToFalse:Play()
@@ -793,13 +791,8 @@ Library.Create = function(_, LibraryOptions)
 					end
                     ToggleFunction(ToggleOptions.State)
 					Toggle.MouseButton1Click:connect(function()
-                        if ToggleOptions.State == true then
-                            ToggleOptions.State = false
-                            ToggleFunction(false)
-                        elseif ToggleOptions.State == false then
-						    ToggleOptions.State = true
-						    ToggleFunction(true)
-                        end
+						ToggleOptions.State = not ToggleOptions.State
+						ToggleFunction(ToggleOptions.State)
 					end)
 				end
 
