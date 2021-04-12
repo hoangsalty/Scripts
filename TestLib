@@ -790,7 +790,7 @@ Library.Create = function(_, LibraryOptions)
 						end
                         ToggleOptions.Callback(State)
 					end
-                    ToggleOptions.Callback(ToggleOptions.State)
+                    ToggleFunction(ToggleOptions.State)
 					Toggle.MouseButton1Click:connect(function()
 						ToggleOptions.State = not ToggleOptions.State
 						ToggleFunction(ToggleOptions.State)
