@@ -778,25 +778,23 @@ Library.Create = function(_, LibraryOptions)
 					local Frame2ToFalse = TS:Create(Frame2, TI(0.15), {Position = UDim2.new(0.5, 0, 0.5, 0), Size = UDim2.new(0, 5, 0, 18)})
 					local Frame1ToTrue = TS:Create(Frame1, TI(0.15), {Position = UDim2.new(0.65, 0, 0.5, 0), Size = UDim2.new(0, 5, 0, 16)})
 					local Frame2ToTrue = TS:Create(Frame2, TI(0.15), {Position = UDim2.new(0.35, 0, 0.5, 2), Size = UDim2.new(0, 5, 0, 11)})
-					ToggleFunction = function(State)
+					ToggleFunction = function()
 						spawn(function()
-							pcall(ToggleOptions.Callback, State)
+							pcall(ToggleOptions.Callback, ToggleOptions.State)
 						end)
-						if State then
+						if ToggleOptions.State == true then
 							ColourToTrue:Play()
 							Frame1ToTrue:Play()
 							Frame2ToTrue:Play()
-
 						else
 							ColourToFalse:Play()
 							Frame1ToFalse:Play()
 							Frame2ToFalse:Play()
 						end
 					end
-                    ToggleFunction(ToggleOptions.State)
+                    ToggleFunction()
 					Toggle.MouseButton1Click:connect(function()
-						ToggleOptions.State = not ToggleOptions.State
-						ToggleFunction(ToggleOptions.State)
+						ToggleFunction()
 					end)
 				end
 
