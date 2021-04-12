@@ -788,6 +788,7 @@ Library.Create = function(_, LibraryOptions)
 							Frame1ToFalse:Play()
 							Frame2ToFalse:Play()
 						end
+                        print(State)
                         ToggleOptions.Callback(State)
 					end
                     ToggleFunction(ToggleOptions.State)
