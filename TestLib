@@ -792,7 +792,8 @@ Library.Create = function(_, LibraryOptions)
 							pcall(ToggleOptions.Callback, State)
 						end)
 					end
-                    spawn(function() ToggleFunction(ToggleOptions.State) end)
+                    ToggleFunction(ToggleOptions.State)
+                    warn(ToggleOptions.State)
 					Toggle.MouseButton1Click:connect(function()
 						ToggleOptions.State = not ToggleOptions.State
 						ToggleFunction(ToggleOptions.State)
