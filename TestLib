@@ -791,10 +791,6 @@ Library.Create = function(_, LibraryOptions)
                         ToggleOptions.Callback(State)
 					end
                     ToggleFunction(ToggleOptions.State)
-					Toggle.MouseButton1Click:connect(function()
-						ToggleOptions.State = not ToggleOptions.State
-						ToggleFunction(ToggleOptions.State)
-					end)
 				end
 
 				AddOptionHoverTweens(Toggle)
