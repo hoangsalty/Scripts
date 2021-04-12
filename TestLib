@@ -780,7 +780,7 @@ Library.Create = function(_, LibraryOptions)
 					local Frame2ToTrue = TS:Create(Frame2, TI(0.15), {Position = UDim2.new(0.35, 0, 0.5, 2), Size = UDim2.new(0, 5, 0, 11)})
 					ToggleFunction = function(State)
                         spawn(function()
-							pcall(ToggleOptions.Callback, State)
+							pcall(ToggleOptions.Callback)
 						end)
 						if State then
 							ColourToTrue:Play()
