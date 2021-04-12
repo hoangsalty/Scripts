@@ -1,3 +1,6 @@
+pcall(function()
+    game.CoreGui.UILibrary:Remove()
+end)
 local Library = {Count = 0, Tab = nil}
 
 local Themes = {
@@ -779,18 +782,20 @@ Library.Create = function(_, LibraryOptions)
 						spawn(function()
 							pcall(ToggleOptions.Callback, State)
 						end)
-						if State then
+						if State == true then
 							ColourToTrue:Play()
 							Frame1ToTrue:Play()
 							Frame2ToTrue:Play()
-
-						else
+                            spawn(function()
+                                pcall(ToggleOptions.Callback, State)
+                            end)
+						elseif State == false then
 							ColourToFalse:Play()
 							Frame1ToFalse:Play()
 							Frame2ToFalse:Play()
 						end
 					end
-
+                    ToggleFunction(ToggleOptions.State)
 					Toggle.MouseButton1Click:connect(function()
 						ToggleOptions.State = not ToggleOptions.State
 						ToggleFunction(ToggleOptions.State)
