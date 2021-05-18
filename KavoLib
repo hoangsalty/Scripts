@@ -143,10 +143,10 @@ end)
 local LibName = "WTF"
 
 function Kavo:ToggleUI()
-    if Main.Size == UDim2.new(0,525,0,318) then
-        Main:TweenSize(UDim2.new(0,0,0,0),Enum.EasingDirection.In,Enum.EasingStyle.Sine,0.2)
+    if game.CoreGui["WTF"].Main.Size == UDim2.new(0,525,0,318) then
+        game.CoreGui["WTF"].Main:TweenSize(UDim2.new(0,0,0,0),Enum.EasingDirection.In,Enum.EasingStyle.Sine,0.2)
     else
-        Main:TweenSize(UDim2.new(0,525,0,318),Enum.EasingDirection.In,Enum.EasingStyle.Sine,0.2)
+        game.CoreGui["WTF"].Main:TweenSize(UDim2.new(0,525,0,318),Enum.EasingDirection.In,Enum.EasingStyle.Sine,0.2)
     end
 end
 
