@@ -1,7 +1,5 @@
-for i,v in next, game.CoreGui:GetChildren() do
-    if v:FindFirstChild("Main") and v.Main:FindFirstChild("pages") then
-        v:Remove()
-    end
+if game.CoreGui:FindFirstChild("WTF") then
+    v.CoreGui["WTF"]:Remove()
 end
 local Kavo = {}
 
@@ -142,7 +140,7 @@ end
 Settings = game:service'HttpService':JSONEncode(readfile(Name))
 end)
 
-local LibName = tostring(game:GetService("HttpService"):GenerateGUID(false))
+local LibName = "WTF"
 
 function Kavo:ToggleUI()
     if Main.Main.Size == UDim2.new(0,525,0,318) then
@@ -192,11 +190,6 @@ function Kavo.CreateLib(kavName, themeList)
     local selectedTab 
     kavName = kavName or "Library"
     table.insert(Kavo, kavName)
-    for i,v in pairs(game.CoreGui:GetChildren()) do
-        if v:IsA("ScreenGui") and v.Name == kavName then
-            v:Destroy()
-        end
-    end
     local ScreenGui = Instance.new("ScreenGui")
     local Main = Instance.new("Frame")
     local MainCorner = Instance.new("UICorner")
