@@ -149,8 +149,8 @@ function Kavo:ToggleUI()
         if v:FindFirstChild("Main") then
             if v.Main.Size == UDim2.new(0,525,0,318) then
                 v.Main:TweenSize(UDim2.new(0,0,0,0),Enum.EasingDirection.In,Enum.EasingStyle.Sine,0.2)
-            elseif v.Main.Size == UDim2.new(0,525,0,318) then
-                v.Main:TweenSize(UDim2.new(0,0,0,0),Enum.EasingDirection.In,Enum.EasingStyle.Sine,0.2)
+            elseif v.Main.Size == UDim2.new(0,0,0,0) then
+                v.Main:TweenSize(UDim2.new(0,525,0,318),Enum.EasingDirection.In,Enum.EasingStyle.Sine,0.2)
             end
         end
     end
