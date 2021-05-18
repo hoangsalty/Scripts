@@ -1335,7 +1335,7 @@ function Kavo.CreateLib(kavName, themeList)
                 val.Text = minvalue
                 val.TextColor3 = themeList.TextColor
                 val.TextSize = 14.000
-                val.TextTransparency = 1.000
+                val.TextTransparency = 0
                 val.TextXAlignment = Enum.TextXAlignment.Right
 
                 local moreInfo = Instance.new("TextLabel")
@@ -1408,6 +1408,7 @@ function Kavo.CreateLib(kavName, themeList)
 
                 local Value
                 Value = startVal
+                val.Text = Value
                 pcall(function()
                     callback(Value)
                 end)
