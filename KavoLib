@@ -1228,7 +1228,7 @@ function Kavo.CreateLib(kavName, themeList)
                     return TogFunction
             end
 
-            function Elements:NewSlider(slidInf, slidTip, maxvalue, minvalue, callback)
+            function Elements:NewSlider(slidInf, slidTip, maxvalue, minvalue, startVal, callback)
                 slidInf = slidInf or "Slider"
                 slidTip = slidTip or "Slider tip here"
                 maxvalue = maxvalue or 500
@@ -1407,12 +1407,16 @@ function Kavo.CreateLib(kavName, themeList)
                 end)()
 
                 local Value
+                Value = startVal
+                pcall(function()
+                    callback(Value)
+                end)
                 sliderBtn.MouseButton1Down:Connect(function()
                     if not focusing then
                         game.TweenService:Create(val, TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.In), {
                             TextTransparency = 0
                         }):Play()
-                        Value = math.floor((((tonumber(maxvalue) - tonumber(minvalue)) / 149) * sliderDrag.AbsoluteSize.X) + tonumber(minvalue)) or 0
+                        Value = math.floor((((tonumber(maxvalue) - tonumber(minvalue)) / 149) * sliderDrag.AbsoluteSize.X) + tonumber(minvalue))
                         pcall(function()
                             callback(Value)
                         end)
