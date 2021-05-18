@@ -145,10 +145,14 @@ end)
 local LibName = tostring(game:GetService("HttpService"):GenerateGUID(false))
 
 function Kavo:ToggleUI()
-    if game.CoreGui[LibName].Enabled then
-        game.CoreGui[LibName].Enabled = false
-    else
-        game.CoreGui[LibName].Enabled = true
+    for i,v in next, game.CoreGui:GetChildren() do
+        if v:FindFirstChild("Main") then
+            if v.Main.Size == UDim2.new(0,525,0,318) then
+                v.Main:TweenSize(UDim2.new(0,0,0,0),Enum.EasingDirection.In,Enum.EasingStyle.Sine,0.2)
+            elseif v.Main.Size == UDim2.new(0,525,0,318) then
+                v.Main:TweenSize(UDim2.new(0,0,0,0),Enum.EasingDirection.In,Enum.EasingStyle.Sine,0.2)
+            end
+        end
     end
 end
 
