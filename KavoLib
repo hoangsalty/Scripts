@@ -928,8 +928,6 @@ function Kavo.CreateLib(kavName, themeList)
                     nTip = nTip or "Prints Current Toggle State"
                     callback = callback or function() end
                     local toggled = toggleState or false
-                    table.insert(SettingsT, tname)
-
                     local toggleElement = Instance.new("TextButton")
                     local UICorner = Instance.new("UICorner")
                     local toggleDisabled = Instance.new("ImageLabel")
