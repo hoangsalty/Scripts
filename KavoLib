@@ -1,5 +1,5 @@
 if game.CoreGui:FindFirstChild("WTF") then
-    v.CoreGui["WTF"]:Remove()
+    game.CoreGui["WTF"]:Remove()
 end
 local Kavo = {}
 
