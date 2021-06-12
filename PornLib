@@ -1068,7 +1068,7 @@ function library:NewWindow(porn,hub)
                     tween:Create(DropToggleIcon,TweenInfo.new(0.2,Enum.EasingStyle.Sine),{Rotation  = 180 ,ImageColor3 = Color3.fromRGB(255,255,255)}):Play()
                     DropList.Visible = true 
                     tween:Create(DropList,TweenInfo.new(0.2,Enum.EasingStyle.Sine),{
-                        Size = UDim2.new(0, 404, 0, 56)
+                        Size = UDim2.new(0, 404, 0, 100)
                     }):Play()
                 else 
                     Close()
